@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hosted Liquid AI agent for the CommonTasks demo.
+"""Hosted Liquid AI agent for the Secret Agent demo.
 
 The procedural-memory corpus stays in local SQLite. For the public demo, model
 inference prefers Liquid AI's small model through OpenRouter. If Liquid is
@@ -18,6 +18,7 @@ from typing import Any
 
 from demo import TOOLS, TOOL_SCHEMAS, deterministic_demo, list_tasks, seed_database
 
+PRODUCT_NAME = "Secret Agent"
 MODEL_API_URL = os.environ.get(
     "COMMONTASKS_API_URL", "https://openrouter.ai/api/v1/chat/completions"
 )
@@ -27,7 +28,7 @@ MODEL_API_KEY = os.environ.get("OPENROUTER_API_KEY") or os.environ.get(
 MODEL = os.environ.get("COMMONTASKS_MODEL", "liquid/lfm-2.5-2.6b:free")
 FALLBACK_MODEL = os.environ.get("COMMONTASKS_FALLBACK_MODEL", "openrouter/free")
 
-SYSTEM_PROMPT = """You are CommonTasks, a small language model that performs recurring organizational tasks by reading a procedural-memory corpus at inference time.
+SYSTEM_PROMPT = """You are Secret Agent, a small language model that performs recurring organizational tasks by reading a procedural-memory corpus at inference time.
 
 The corpus contains organization-specific procedures, reference rules, worked examples, and synthetic prior-agent cases. You were not trained or fine-tuned on these organizational tasks. Retrieve the relevant corpus material and apply it to the employee's new details.
 
@@ -42,7 +43,7 @@ For substantive employee requests:
 8. Never invent approvals, measurements, dates, identities, outcomes, or actions that were not provided.
 9. For medical, legal, regulatory, security, or other high-stakes material, provide structured analysis/checklist support from the retrieved corpus but do not make the final authorized decision, diagnose, prescribe, or give legal sign-off.
 
-Answer naturally. Do not explain the retrieval machinery unless the employee asks how CommonTasks works.
+Answer naturally. Do not explain the retrieval machinery unless the employee asks how Secret Agent works.
 """
 
 
@@ -50,7 +51,7 @@ def hosted_chat(messages: list[dict[str, Any]]) -> dict[str, Any]:
     """Call OpenRouter, preferring Liquid and falling back to another free tool-capable model."""
     if not MODEL_API_KEY:
         raise RuntimeError(
-            "Missing API key. Set OPENROUTER_API_KEY before starting CommonTasks."
+            "Missing API key. Set OPENROUTER_API_KEY before starting Secret Agent."
         )
 
     models = [MODEL]
@@ -74,7 +75,7 @@ def hosted_chat(messages: list[dict[str, Any]]) -> dict[str, Any]:
             "Content-Type": "application/json",
             "Authorization": f"Bearer {MODEL_API_KEY}",
             "HTTP-Referer": "https://github.com/recant/commontasks",
-            "X-OpenRouter-Title": "CommonTasks",
+            "X-OpenRouter-Title": PRODUCT_NAME,
         },
         method="POST",
     )
@@ -158,7 +159,7 @@ def run_agent(user_prompt: str, max_steps: int = 8, verbose: bool = True) -> str
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="CommonTasks procedural-memory demo with Liquid + free fallback via OpenRouter"
+        description="Secret Agent procedural-memory demo with Liquid + free fallback via OpenRouter"
     )
     parser.add_argument("prompt", nargs="*", help="Task plus the current case details")
     parser.add_argument("--seed", type=int, default=50_000)
@@ -182,7 +183,7 @@ def main() -> int:
         deterministic_demo()
         return 0
 
-    prompt = " ".join(args.prompt).strip() or input("Ask CommonTasks: ").strip()
+    prompt = " ".join(args.prompt).strip() or input("Ask Secret Agent: ").strip()
     if not prompt:
         return 0
     print(run_agent(prompt, verbose=not args.quiet))
