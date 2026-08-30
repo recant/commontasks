@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser UI for the offline/intranet CommonTasks demo."""
+"""Browser UI for the CommonTasks procedural-memory demo."""
 
 from __future__ import annotations
 
@@ -9,7 +9,8 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from demo import MODEL, list_tasks, run_agent, seed_database
+from demo import list_tasks, seed_database
+from liquid_agent import MODEL, run_agent
 
 HOST = os.environ.get("COMMONTASKS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("COMMONTASKS_PORT", "8000"))
@@ -31,7 +32,7 @@ def build_prompt(message: str, history: list[dict[str, Any]]) -> str:
         return message
     return (
         "Continue this employee conversation. Case-specific facts must come from this conversation. "
-        "Retrieve the relevant procedure/examples from the internal corpus before doing the task.\n\n"
+        "Retrieve the relevant procedure, reference, and examples from the corpus before doing the task.\n\n"
         "Recent conversation:\n"
         + "\n".join(lines)
         + f"\nUSER: {message}"
@@ -56,7 +57,7 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(200, {
                 "ok": True,
                 "model": MODEL,
-                "inference": "local/intranet",
+                "inference": "OpenRouter",
                 "tasks": len(list_tasks()["tasks"]),
             })
             return
@@ -96,7 +97,7 @@ def main() -> None:
         f"Ready: {info['corpus_rows']:,} procedural-memory records across "
         f"{info['tasks']} tasks in {info['database']}"
     )
-    print(f"Intranet model: {MODEL}")
+    print(f"Hosted model: {MODEL} via OpenRouter")
     print(f"Open http://localhost:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
 
