@@ -24,11 +24,19 @@ describe('getProviderCapabilities (v0.38 Slice 1 — D6/D7 recipe-driven capabil
     expect(caps.maxContext).toBe(1_050_000); // gpt-5.6 family window (recipe-driven)
   });
 
-  it('returns local chat capabilities for Ollama without tool-loop support', () => {
-    const caps = getProviderCapabilities('ollama:qwen3:8b');
-    expect(caps.supportsToolCalling).toBe(false);
-    expect(caps.supportsPromptCaching).toBe(false);
-    expect(caps.supportsParallelTools).toBe(false);
+  it('returns Ollama tool capabilities per model, not per endpoint', () => {
+    // Tool support on Ollama is a property of the loaded model's chat
+    // template, so one endpoint serves both answers. Prompt caching stays
+    // false either way: local inference re-reads the prompt each turn.
+    const capable = getProviderCapabilities('ollama:qwen3:8b');
+    expect(capable.supportsToolCalling).toBe(true);
+    expect(capable.supportsParallelTools).toBe(true);
+    expect(capable.supportsPromptCaching).toBe(false);
+
+    const completionOnly = getProviderCapabilities('ollama:tinyllama');
+    expect(completionOnly.supportsToolCalling).toBe(false);
+    expect(completionOnly.supportsParallelTools).toBe(false);
+    expect(completionOnly.supportsPromptCaching).toBe(false);
   });
 
   it('returns capabilities for Google Gemini', () => {
@@ -63,11 +71,12 @@ describe('getProviderCapabilities (v0.38 Slice 1 — D6/D7 recipe-driven capabil
     expect(caps.supportsPromptCaching).toBe(false);
   });
 
-  it('returns local chat capabilities for Ollama without tool-loop support', () => {
+  it('resolves the Ollama tool predicate against the tag-stripped family', () => {
+    // `qwen2.5-coder:14b` must match on the family, ignoring the size tag.
     const caps = getProviderCapabilities('ollama:qwen2.5-coder:14b');
-    expect(caps.supportsToolCalling).toBe(false);
+    expect(caps.supportsToolCalling).toBe(true);
     expect(caps.supportsPromptCaching).toBe(false);
-    expect(caps.supportsParallelTools).toBe(false);
+    expect(caps.supportsParallelTools).toBe(true);
   });
 
   it('honors Anthropic alias (undated → dated)', () => {
@@ -118,8 +127,17 @@ describe('classifyCapabilities (D6 — three-tier capability verdict)', () => {
     expect(classifyCapabilities('deepseek:deepseek-v4-flash')).toBe('ok');
   });
 
-  it('returns unusable:no_tools for Ollama subagent loops', () => {
-    expect(classifyCapabilities('ollama:qwen3:8b')).toBe('unusable:no_tools');
+  it('admits tool-capable Ollama models to the subagent loop and refuses the rest', () => {
+    // A tool-capable local model is usable — degraded only because local
+    // inference has no prompt cache, which the gates treat as runnable.
+    expect(classifyCapabilities('ollama:qwen3:8b')).toBe('degraded:no_caching');
+    expect(classifyCapabilities('ollama:qwen3.5:4b')).toBe('degraded:no_caching');
+    // Completion-only models still cannot dispatch a tool call.
+    expect(classifyCapabilities('ollama:tinyllama')).toBe('unusable:no_tools');
+    // llama3 shipped without tool calling; llama3.1 added it. The family
+    // matcher must not treat the former as a prefix of the latter.
+    expect(classifyCapabilities('ollama:llama3:8b')).toBe('unusable:no_tools');
+    expect(classifyCapabilities('ollama:llama3.1:8b')).toBe('degraded:no_caching');
   });
 
   it('returns degraded:no_caching for Google Gemini', () => {
@@ -149,8 +167,8 @@ describe('classifyCapabilities (D6 — three-tier capability verdict)', () => {
     expect(classifyCapabilities('nvidia:nvidia/nemotron-3-super-120b-a12b')).toBe('unusable:no_tools');
   });
 
-  it('returns unusable:no_tools for Ollama subagent loops', () => {
-    expect(classifyCapabilities('ollama:qwen2.5-coder:14b')).toBe('unusable:no_tools');
+  it('classifies a tag-suffixed Ollama model by its family', () => {
+    expect(classifyCapabilities('ollama:qwen2.5-coder:14b')).toBe('degraded:no_caching');
   });
 
   it('OpenAI caching is per model generation, not provider-wide', () => {

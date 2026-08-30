@@ -48,7 +48,7 @@ import {
   logSubagentSubmission,
   logSubagentHeartbeat,
 } from './subagent-audit.ts';
-import { resolveModel, isAnthropicProvider, isOpenRouterAnthropic, TIER_DEFAULTS } from '../../model-config.ts';
+import { resolveModel, isAnthropicProvider, isOpenRouterAnthropic, isLocalRuntimeModel, TIER_DEFAULTS } from '../../model-config.ts';
 import { splitProviderModelId, normalizeModelId } from '../../model-id.ts';
 import { resolveAnthropicKey } from '../../ai/anthropic-key.ts';
 import { buildSystemPrompt, DEFAULT_SUBAGENT_SYSTEM } from '../system-prompt.ts';
@@ -440,7 +440,14 @@ export function makeSubagentHandler(deps: SubagentDeps) {
     // OpenRouter Anthropic is not `isAnthropicProvider` (the Messages SDK
     // cannot speak OR). Auto-enable the gateway loop so the legacy pin
     // does not refuse `openrouter:anthropic/…` when the flag is off.
-    const useGatewayLoop = isConfigTruthy(useGatewayLoopRaw) || isOpenRouterAnthropic(model);
+    // Local runtimes (ollama, llama-server) are the same case: they serve an
+    // OpenAI-compatible surface the Messages SDK cannot speak, so the legacy
+    // path could only ever refuse them. Requiring a config flag first would
+    // make every local install hit a confusing "enable the gateway loop"
+    // error on its first job, for a path that has no working alternative.
+    const useGatewayLoop = isConfigTruthy(useGatewayLoopRaw)
+      || isOpenRouterAnthropic(model)
+      || isLocalRuntimeModel(model);
     if (!useGatewayLoop && !isAnthropicProvider(model)) {
       throw new Error(
         `subagent job: resolved model "${model}" is non-Anthropic but agent.use_gateway_loop is not enabled. ` +

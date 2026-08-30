@@ -96,6 +96,53 @@ For ticket `1001`, the model can:
 
 The write tools deliberately affect **only the synthetic SQLite ticket table**. This keeps the example safe while showing the same agent pattern that could later sit in front of real enterprise APIs with authentication, permissions, approval gates, and audit logs.
 
+## The real retrieval layer: `gbrain/`
+
+The demo above is a proof of concept. The production path is a vendored, SLM-retuned copy of
+[GBrain](https://github.com/garrytan/gbrain) in [`gbrain/`](gbrain/) — a Postgres + pgvector
+brain with hybrid retrieval, a zero-LLM knowledge graph, cited synthesis with gap analysis, and
+a crash-safe job queue. See [`gbrain/UPSTREAM.md`](gbrain/UPSTREAM.md) for the pinned upstream
+commit and the full inventory of local changes.
+
+GBrain assumes a frontier model throughout. Three things had to change before it could run on a
+local few-billion-parameter model:
+
+1. **The agent loop refused local models outright.** The Ollama recipe declared
+   `supports_tools: false`, so every local model classified as `unusable:no_tools` and was
+   rejected at all three subagent gates. Tool support is a property of the *model's* chat
+   template, not the endpoint, so it is now a per-model predicate — `qwen3.5:4b` is admitted,
+   `tinyllama` is still correctly refused.
+2. **Tier defaults were Anthropic-only.** A local runtime is now a recognized provider, added
+   last so every cloud-keyed install resolves exactly as it did before.
+3. **The subagent gate failed *quietly* to the cloud.** When a model couldn't run the tool
+   loop, gbrain warned on stderr and silently fell back to `anthropic:claude-sonnet-4-6` — the
+   job still ran, and the prompts plus every retrieved page still left the machine. Under
+   `GBRAIN_LOCAL_ONLY` that fallback is now a hard error.
+
+### Local-only configuration
+
+```bash
+export GBRAIN_LOCAL_ONLY=1          # nothing leaves the machine; no silent cloud fallback
+export GBRAIN_LOCAL_MODEL=ollama:qwen3.5:4b   # optional, this is the default
+ollama pull qwen3.5:4b && ollama pull nomic-embed-text
+```
+
+All tiers deliberately resolve to the same local model: Ollama evicts and reloads weights when
+the requested model changes, so a per-tier split would thrash RAM and add a cold start to every
+tier crossing.
+
+### Verifying
+
+```bash
+cd gbrain && bun install
+bun run typecheck
+bun test test/ai/local-only-profile.test.ts test/ai/capabilities.test.ts
+```
+
+`bun run verify` is upstream CI tooling that does not survive vendoring — its guards resolve
+their root via `git rev-parse --show-toplevel`, which now finds this repo rather than `gbrain/`.
+`UPSTREAM.md` explains the workaround and records the upstream baseline.
+
 ## Architecture direction
 
 A production version would replace the toy FTS index with a hybrid/vector retrieval layer and replace fake ticket actions with permissioned enterprise tools. The useful boundary is:

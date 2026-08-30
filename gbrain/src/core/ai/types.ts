@@ -282,8 +282,13 @@ export interface RerankerTouchpoint {
 
 export interface ChatTouchpoint {
   models: string[];
-  /** Provider returns native function/tool calling. */
-  supports_tools: boolean;
+  /**
+   * Provider returns native function/tool calling. Boolean for recipe-wide
+   * behavior; predicate when only some routed model ids can hold a tool loop
+   * (local runtimes front arbitrary user-pulled models — Ollama serves both
+   * tool-capable families and tiny completion-only ones off one endpoint).
+   */
+  supports_tools: boolean | ((modelId: string) => boolean);
   /**
    * Stable enough across crashes/replays to drive a Minions subagent loop.
    * Strictly stronger than supports_tools. Boolean for recipe-wide behavior;

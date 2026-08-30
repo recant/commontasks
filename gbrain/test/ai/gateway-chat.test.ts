@@ -82,12 +82,12 @@ describe('chat touchpoint — recipe registry', () => {
     expect(getRecipe('voyage')!.touchpoints.chat).toBeUndefined();
   });
 
-  test('Ollama declares local chat without subagent tool-loop support', () => {
+  test('Ollama declares local chat with per-model tool-loop support', () => {
     const chat = getRecipe('ollama')!.touchpoints.chat;
     expect(chat).toBeDefined();
     expect(chat!.models).toContain('qwen2.5-coder:14b');
-    expect(chat!.supports_tools).toBe(false);
-    expect(chat!.supports_subagent_loop).toBe(false);
+    expect(typeof chat!.supports_tools).toBe('function');
+    expect(typeof chat!.supports_subagent_loop).toBe('function');
     expect(chat!.supports_prompt_cache).toBe(false);
     expect(chat!.cost_per_1m_input_usd).toBe(0);
     expect(chat!.cost_per_1m_output_usd).toBe(0);

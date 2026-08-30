@@ -40,8 +40,9 @@ describe('recipe: ollama', () => {
 
     expect(r.touchpoints.chat).toBeDefined();
     expect(r.touchpoints.chat!.models).toContain('qwen2.5-coder:14b');
-    expect(r.touchpoints.chat!.supports_tools).toBe(false);
-    expect(r.touchpoints.chat!.supports_subagent_loop).toBe(false);
+    // Per-model predicate now (tool support is a model-template property).
+    expect(typeof r.touchpoints.chat!.supports_tools).toBe('function');
+    expect(typeof r.touchpoints.chat!.supports_subagent_loop).toBe('function');
     expect(r.touchpoints.chat!.supports_prompt_cache).toBe(false);
     expect(r.touchpoints.chat!.cost_per_1m_input_usd).toBe(0);
     expect(r.touchpoints.chat!.cost_per_1m_output_usd).toBe(0);

@@ -27,6 +27,7 @@ import { loadConfig } from './config.ts';
 import { mergedProviderEnv } from './ai/provider-env.ts';
 import { RECIPES } from './ai/recipes/index.ts';
 import { latestOpenAITiers, rankOpenAIChatModels } from './ai/openai-latest.ts';
+import { AIConfigError } from './ai/errors.ts';
 
 export type ModelTier = 'utility' | 'reasoning' | 'deep' | 'subagent';
 
@@ -139,13 +140,70 @@ function discoveredOrStaticOpenAITier(tier: ModelTier): string {
   return typeof discovered === 'string' ? discovered : openaiStaticTierFallback()[tier];
 }
 
+/**
+ * Local-runtime tier defaults (SLM profile). Every tier resolves to the SAME
+ * model on purpose: Ollama evicts and reloads weights when the requested model
+ * changes, so a four-model tier split would thrash a laptop's RAM and add a
+ * cold start to every tier crossing. One loaded model is the fast path.
+ *
+ * `GBRAIN_LOCAL_MODEL` overrides the tag (e.g. a 8B/14B for more headroom).
+ * The default is a small tool-capable model so `isToolCapableOllamaModel`
+ * accepts it and the subagent loop can actually run.
+ */
+export const DEFAULT_LOCAL_CHAT_MODEL = 'ollama:qwen3.5:4b';
+
+export function localTierDefault(_tier: ModelTier, env: Record<string, string> = {}): string {
+  const pinned = env.GBRAIN_LOCAL_MODEL ?? process.env.GBRAIN_LOCAL_MODEL;
+  const model = typeof pinned === 'string' && pinned.trim() !== '' ? pinned.trim() : DEFAULT_LOCAL_CHAT_MODEL;
+  return model.includes(':') ? model : `ollama:${model}`;
+}
+
+/**
+ * Providers served by a local inference runtime on the operator's own machine.
+ *
+ * These speak an OpenAI-compatible wire shape, never the Anthropic Messages
+ * API, so the legacy Anthropic-direct subagent path definitionally cannot
+ * drive them — same situation as `openrouter:anthropic/*`, which already
+ * auto-enables the gateway loop.
+ */
+const LOCAL_RUNTIME_PROVIDERS = new Set(['ollama', 'llama-server']);
+
+/** Is this `provider:model` string served by a local inference runtime? */
+export function isLocalRuntimeModel(modelString: string): boolean {
+  const provider = splitProviderModelId(modelString).provider;
+  return provider !== null && LOCAL_RUNTIME_PROVIDERS.has(provider);
+}
+
+/**
+ * Is this brain pinned to local-only inference?
+ *
+ * `GBRAIN_LOCAL_ONLY` is the operator's declaration that no prompt may leave
+ * the machine. It does two things: it moves local tier defaults AHEAD of the
+ * cloud entries (so a box that also happens to carry an ANTHROPIC_API_KEY
+ * still routes locally), and it converts `enforceSubagentCapable`'s silent
+ * cloud fallback into a hard error. See the comment there for why the silent
+ * path is unacceptable under this flag.
+ */
+export function isLocalOnlyProfile(env: Record<string, string | undefined> = process.env): boolean {
+  const raw = env.GBRAIN_LOCAL_ONLY;
+  if (typeof raw !== 'string') return false;
+  const v = raw.trim().toLowerCase();
+  return v === '1' || v === 'true' || v === 'yes' || v === 'on';
+}
+
 export const PROVIDER_TIER_DEFAULTS: ReadonlyArray<{
-  provider: 'anthropic' | 'openai';
+  provider: 'anthropic' | 'openai' | 'ollama';
   envKey: string;
   tiers: (tier: ModelTier) => string;
 }> = [
   { provider: 'anthropic', envKey: 'ANTHROPIC_API_KEY', tiers: (tier) => TIER_DEFAULTS[tier] },
   { provider: 'openai', envKey: 'OPENAI_API_KEY', tiers: discoveredOrStaticOpenAITier },
+  // Local last: a keyed install keeps its existing resolution byte-for-byte.
+  // A keyless install with a local runtime reachable now resolves to that
+  // runtime instead of an Anthropic model whose key is absent — which is what
+  // "keyless installs degrade honestly downstream" used to mean in practice.
+  // `GBRAIN_LOCAL_ONLY` promotes this entry to the front (see resolveTierDefault).
+  { provider: 'ollama', envKey: 'OLLAMA_BASE_URL', tiers: localTierDefault },
 ];
 
 /** loadConfig, throw-safe (the hasAnthropicKey pattern): unreadable config = env-only. */
@@ -175,6 +233,10 @@ export function resolveTierDefault(
   env?: Record<string, string | undefined>,
 ): string {
   const merged = env ? realEnv(env) : mergedProviderEnv(throwSafeLoadConfig(), process.env);
+  // Local-only wins outright, with or without OLLAMA_BASE_URL set: the flag is
+  // a promise that nothing leaves the box, so a stray cloud key must not
+  // silently reclaim the tier defaults.
+  if (isLocalOnlyProfile(env ?? process.env)) return localTierDefault(tier, merged);
   for (const entry of PROVIDER_TIER_DEFAULTS) {
     if (merged[entry.envKey]) return entry.tiers(tier);
   }
@@ -506,13 +568,28 @@ function enforceSubagentCapable(resolved: string, tier: ModelTier | undefined, s
 
   const key = `${source}:${resolved}`;
   if (verdict === 'unusable:no_tools' || verdict === 'unusable:no_subagent_loop' || verdict === 'unknown') {
+    const reason = verdict === 'unusable:no_tools'
+      ? `lacks tool-calling support`
+      : verdict === 'unusable:no_subagent_loop'
+        ? `declares the subagent loop unsupported (supports_subagent_loop: false)`
+        : `is an unrecognized provider`;
+    // Under GBRAIN_LOCAL_ONLY the fallback below is not a degradation, it is a
+    // data leak: it would silently reroute the job — and every page the loop
+    // retrieves — to a hosted API, breaking the one guarantee the flag makes.
+    // A stderr warn is not enough, because the job still runs and the prompts
+    // still ship. Fail loudly and let the operator pick a local model instead.
+    if (isLocalOnlyProfile()) {
+      throw new AIConfigError(
+        `tier.subagent resolved to "${resolved}" via "${source}", which ${reason}. ` +
+        `GBRAIN_LOCAL_ONLY is set, so gbrain will NOT fall back to ${TIER_DEFAULTS.subagent} ` +
+        `(that would send this job's prompts and retrieved pages off-machine).`,
+        `Pick a local model whose template supports tool calling: ` +
+        `gbrain config set models.tier.subagent ollama:qwen3.5:4b ` +
+        `(or set GBRAIN_LOCAL_MODEL). Unset GBRAIN_LOCAL_ONLY to allow the cloud fallback.`,
+      );
+    }
     if (!_subagentTierWarningsEmitted.has(key)) {
       _subagentTierWarningsEmitted.add(key);
-      const reason = verdict === 'unusable:no_tools'
-        ? `lacks tool-calling support`
-        : verdict === 'unusable:no_subagent_loop'
-          ? `declares the subagent loop unsupported (supports_subagent_loop: false)`
-          : `is an unrecognized provider`;
       process.stderr.write(
         `[models] tier.subagent resolved to "${resolved}" via "${source}", which ${reason}. ` +
         `The subagent tool loop cannot run on this model — falling back to ${TIER_DEFAULTS.subagent}. ` +
@@ -526,10 +603,16 @@ function enforceSubagentCapable(resolved: string, tier: ModelTier | undefined, s
   if (verdict === 'degraded:no_caching') {
     if (!_subagentTierWarningsEmitted.has(key)) {
       _subagentTierWarningsEmitted.add(key);
+      // Local inference bills no tokens, so the "switch to Anthropic to save
+      // money" advice is actively wrong there — the cost of a hot loop is
+      // wall-clock, and the fix is a smaller model or fewer turns.
+      const remedy = isLocalOnlyProfile()
+        ? `On local inference this costs wall-clock rather than tokens; shorten the loop (agent.max_turns) or use a smaller model if turns get slow.`
+        : `For lower cost on long loops, set models.tier.subagent to an Anthropic model.`;
       process.stderr.write(
         `[models] tier.subagent resolved to "${resolved}" via "${source}" — provider does not support prompt caching. ` +
         `The loop will run hot (cost scales linearly with conversation length). ` +
-        `For lower cost on long loops, set models.tier.subagent to an Anthropic model.\n`,
+        `${remedy}\n`,
       );
     }
   }

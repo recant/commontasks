@@ -113,8 +113,14 @@ export function getProviderCapabilities(modelString: string): ProviderCapabiliti
   const promptCache = chat.supports_prompt_cache;
 
   const subagentLoop = chat.supports_subagent_loop;
+  // Resolved ONCE: `supports_tools` may be a per-model predicate (local
+  // runtimes serve tool-capable and completion-only models off one endpoint),
+  // and both consumers below must agree on the same answer for a given id.
+  const toolCalling = typeof chat.supports_tools === 'function'
+    ? chat.supports_tools(parsed.modelId)
+    : chat.supports_tools === true;
   return {
-    supportsToolCalling: chat.supports_tools === true,
+    supportsToolCalling: toolCalling,
     supportsSubagentLoop: typeof subagentLoop === 'function'
       ? subagentLoop(parsed.modelId)
       : subagentLoop === true,
@@ -124,7 +130,7 @@ export function getProviderCapabilities(modelString: string): ProviderCapabiliti
     // No recipe exposes parallel-tools-specifically yet; gate on supports_tools.
     // Subsequent waves can split this into its own recipe field if a provider
     // ever supports tools without parallel dispatch.
-    supportsParallelTools: chat.supports_tools === true,
+    supportsParallelTools: toolCalling,
     // Recipe-declared thinking-by-default (gbrain#4172): true when the model
     // reasons without being asked and bills that reasoning as output tokens.
     // Boolean or per-model predicate, mirroring supports_prompt_cache.

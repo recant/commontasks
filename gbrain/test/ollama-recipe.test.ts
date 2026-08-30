@@ -29,12 +29,20 @@ describe('Ollama recipe — chat touchpoint', () => {
     }
   });
 
-  test('local chat models advertise no hosted-only capabilities', () => {
-    // Local Ollama chat serves plain completions; the gateway must not route
-    // tool-use / subagent / structured-output work here.
+  test('local chat gates tool work per model, and never claims prompt caching', () => {
+    // Tool + subagent support is declared as a per-model predicate: an Ollama
+    // endpoint serves tool-capable families and completion-only ones alike, so
+    // a recipe-wide boolean is wrong in both directions. Structured output IS
+    // recipe-wide — constrained decoding is enforced by the server, not the
+    // model. Prompt caching stays false: local inference re-reads each turn.
     const tp = getRecipe('ollama')!.touchpoints.chat!;
-    expect(tp.supports_tools).toBe(false);
-    expect(tp.supports_subagent_loop).toBe(false);
-    expect(tp.supports_structured_outputs).toBe(false);
+    expect(typeof tp.supports_tools).toBe('function');
+    expect(typeof tp.supports_subagent_loop).toBe('function');
+    expect((tp.supports_tools as (m: string) => boolean)('qwen3.5:4b')).toBe(true);
+    expect((tp.supports_tools as (m: string) => boolean)('tinyllama')).toBe(false);
+    expect((tp.supports_subagent_loop as (m: string) => boolean)('qwen3.5:4b')).toBe(true);
+    expect((tp.supports_subagent_loop as (m: string) => boolean)('tinyllama')).toBe(false);
+    expect(tp.supports_structured_outputs).toBe(true);
+    expect(tp.supports_prompt_cache).toBe(false);
   });
 });
