@@ -143,3 +143,33 @@ describe('subagent gate under GBRAIN_LOCAL_ONLY', () => {
     expect(await resolveModel(null, subagent)).toBe('ollama:qwen3.5:4b');
   });
 });
+
+describe('think synthesis under the local profile', () => {
+  it('routes the deep/think tier to the local model, never Anthropic', async () => {
+    // `think` resolves tier 'deep', which upstream maps to Opus — the single
+    // most expensive route in the system and the one that would quietly send
+    // every retrieved page off-machine. Pinned here because the routing is a
+    // consequence of resolveTierDefault's local branch rather than anything
+    // think itself does, so a future edit to the tier chain could silently
+    // send synthesis back to the cloud with nothing failing.
+    process.env.GBRAIN_LOCAL_ONLY = '1';
+    const model = await resolveModel(null, {
+      tier: 'deep',
+      configKey: 'models.think',
+      fallback: TIER_DEFAULTS.deep,
+    });
+    expect(model).toBe(DEFAULT_LOCAL_CHAT_MODEL);
+    expect(model.startsWith('anthropic:')).toBe(false);
+  });
+
+  it('gives every tier the same local model so Ollama never swaps weights', () => {
+    // Ollama evicts and reloads when the requested model changes. A think call
+    // landing on a different tag than chat would add a cold start to every
+    // synthesis and roughly double resident memory.
+    const env = { GBRAIN_LOCAL_ONLY: '1' };
+    const models = (['utility', 'reasoning', 'deep', 'subagent'] as const)
+      .map((t) => resolveTierDefault(t, env));
+    expect(new Set(models).size).toBe(1);
+    expect(models[0]).toBe(DEFAULT_LOCAL_CHAT_MODEL);
+  });
+});

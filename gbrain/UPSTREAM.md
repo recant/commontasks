@@ -159,6 +159,30 @@ All four tiers resolve to the *same* local model on purpose: Ollama evicts and
 reloads weights when the requested model changes, so a four-model tier split
 would thrash RAM and add a cold start to every tier crossing.
 
+This covers `gbrain think` with no change to `think/index.ts`: it resolves tier
+`deep`, and `resolveTierDefault`'s local branch answers for every tier. Worth
+knowing because the routing is a *consequence* of the tier chain rather than
+anything think does — `test/ai/local-only-profile.test.ts` pins it so a later
+edit there cannot quietly send synthesis (and every retrieved page) to Opus.
+
+### Operational: `OLLAMA_CONTEXT_LENGTH` must be raised
+
+gbrain reaches Ollama through the OpenAI-compatible `/v1` surface, which has no
+field for `num_ctx` — the context window comes from the model's Modelfile or the
+`OLLAMA_CONTEXT_LENGTH` env var read by `ollama serve`. Ollama's default is 2-4k
+and it **truncates an over-long prompt rather than erroring**.
+
+`think` is the exposed surface: it sends pages + takes + graph plus a compound
+JSON schema in one call. Truncated, the model returns malformed JSON,
+`parseLlmJson` fails, and synthesis degrades with nothing in the logs naming the
+cause. `OLLAMA_CONTEXT_LENGTH=16384` fits the `slm` bundle's 3000-token retrieval
+budget plus the system prompt and envelope.
+
+A `gbrain doctor` check that reads the loaded model's context via Ollama's
+`/api/show` and warns when it is below the resolved token budget would turn this
+from a documented footgun into a detected one — worth doing once a live Ollama is
+reachable to test against.
+
 ## Running upstream's checks against this copy
 
 `bun run typecheck` and `bun test` work normally from this directory.

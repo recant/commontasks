@@ -150,6 +150,11 @@ open and autocut disables itself, so search degrades rather than breaks.
 ```bash
 export GBRAIN_LOCAL_ONLY=1          # nothing leaves the machine; no silent cloud fallback
 export GBRAIN_LOCAL_MODEL=ollama:qwen3.5:4b   # optional, this is the default
+
+# REQUIRED: raise Ollama's context window before starting it (see below)
+export OLLAMA_CONTEXT_LENGTH=16384
+ollama serve &
+
 ollama pull qwen3.5:4b && ollama pull nomic-embed-text
 gbrain config set search.mode slm
 
@@ -161,6 +166,24 @@ llama-server --model qwen3-reranker-0.6b.gguf --alias qwen3-reranker-0.6b \
 All tiers deliberately resolve to the same local model: Ollama evicts and reloads weights when
 the requested model changes, so a per-tier split would thrash RAM and add a cold start to every
 tier crossing.
+
+That includes **`gbrain think`**, the synthesis step. Upstream it runs on the `deep` tier
+(Opus-class) — the most expensive route in the system, and the one that would otherwise ship every
+retrieved page off-machine. Under `GBRAIN_LOCAL_ONLY` it resolves to the same local qwen as
+everything else, and a test pins that so a future change to the tier chain can't quietly send
+synthesis back to the cloud.
+
+### Set `OLLAMA_CONTEXT_LENGTH` — this one bites silently
+
+Neither gbrain nor any OpenAI-compatible client can set Ollama's `num_ctx` per request; it comes
+from the model's Modelfile or the `OLLAMA_CONTEXT_LENGTH` environment variable read by
+`ollama serve`. Ollama's default is small (2–4k depending on version), and when a prompt exceeds it
+Ollama **truncates rather than erroring**.
+
+That matters most for `think`, which sends the retrieved pages, takes and graph plus a compound JSON
+schema in one call. Truncated silently, the model emits malformed or partial JSON, the parse fails,
+and synthesis degrades with nothing in the logs pointing at the real cause. 16384 comfortably fits
+the `slm` mode's 3000-token retrieval budget plus the system prompt and the JSON envelope.
 
 ### Verifying
 
