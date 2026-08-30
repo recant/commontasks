@@ -2,12 +2,13 @@
 """Browser UI for CommonTasks.
 
 Run:
-    export GROQ_API_KEY="..."
+    export OPENROUTER_API_KEY="..."
     python3 webapp.py
 Then open:
     http://localhost:8000
 
-The browser and company database are local; model inference is hosted.
+The browser and synthetic company database are local; model inference is hosted
+through OpenRouter using Liquid AI's free LFM2.5-2.6B endpoint by default.
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from demo import MODEL, run_agent, seed_database
+from liquid_agent import MODEL, run_agent, seed_database
 
 HOST = os.environ.get("COMMONTASKS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("COMMONTASKS_PORT", "8000"))
