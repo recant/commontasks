@@ -18,13 +18,13 @@
 <body>
 <main class="shell">
   <header>
-    <div class="brand"><div class="logo">C</div><div><h1>CommonTasks</h1><div class="sub">Small intranet model · organizational procedural memory</div></div></div>
-    <div class="status"><span class="dot"></span><span id="model">intranet SLM</span></div>
+    <div class="brand"><div class="logo">C</div><div><h1>CommonTasks</h1><div class="sub">Liquid SLM · organizational procedural memory</div></div></div>
+    <div class="status"><span class="dot"></span><span id="model">Liquid via OpenRouter</span></div>
   </header>
   <section id="messages">
     <div class="welcome" id="welcome">
       <h2>Give it the case. The corpus teaches it the task.</h2>
-      <p>CommonTasks retrieves internal procedures, reference rules, worked examples, and similar prior-agent cases, then applies them to the new details you provide. No external model or internet is required.</p>
+      <p>CommonTasks retrieves internal procedures, reference rules, worked examples, and similar prior-agent cases, then gives that compact context to a small Liquid model through OpenRouter so it can apply the procedure to the new details you provide.</p>
       <div class="examples">
         <button class="example" data-prompt="Analyze this incident: checkout is returning errors on about 35% of requests, it started 12 minutes ago, and we have no evidence of data loss."><div class="eyebrow">Operations</div>Classify an incident from new details</button>
         <button class="example" data-prompt="Analyze these notes as an intelligence report: Source A says the facility reopened Monday. A satellite note says vehicle activity resumed Tuesday. Source B says it remains closed but gives no date."><div class="eyebrow">Analysis</div>Analyze a report using the internal rubric</button>
@@ -37,7 +37,7 @@
   </section>
   <form id="form">
     <div class="composer"><textarea id="input" rows="1" placeholder="Describe the task and provide the case details…" autofocus></textarea><button class="send" id="send" type="submit">↑</button></div>
-    <div class="foot">Browser → intranet SLM → local procedural-memory corpus · no public-internet fallback</div>
+    <div class="foot">Browser → local procedural-memory corpus → Liquid LFM2.5-2.6B via OpenRouter</div>
   </form>
 </main>
 <script>
