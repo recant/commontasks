@@ -1,0 +1,3700 @@
+[
+ {
+  "id": "clm_src001_01",
+  "text": "Every claim must pass a pre-submission scrub verifying active NPIs matching the credentialed record, member eligibility for the DOS, and presence of any required prior auth.",
+  "speaker": "p_priya_nair",
+  "source_id": "src001",
+  "date": "2025-09-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "Verify rendering and billing NPI are active and match the credentialed record"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src001_02",
+  "text": "A real-time 270/271 eligibility check runs at intake for every claim where the payer supports it, with cached fallback when the connection is degraded.",
+  "speaker": "p_priya_nair",
+  "source_id": "src001",
+  "date": "2025-09-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "Run a real-time 270/271 eligibility check at intake for every claim where the payer supports it"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src001_03",
+  "text": "Front-end 837 rejections must be corrected and resubmitted within 2 business days of the rejection notice.",
+  "speaker": "p_priya_nair",
+  "source_id": "src001",
+  "date": "2025-09-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "corrected and resubmitted within 2 business days of the rejection notice"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src002_01",
+  "text": "Denials must be worked within 5 business days of remittance posting.",
+  "speaker": "p_priya_nair",
+  "source_id": "src002",
+  "date": "2025-10-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "Denials must be worked within 5 business days of remittance posting."
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src002_02",
+  "text": "SOP-002 modifier guidance: where documentation supports a distinct service, append modifier 59 to the secondary procedure and resubmit. [STALE for Anthem since March 2026 — X-subset required.]",
+  "speaker": "p_priya_nair",
+  "source_id": "src002",
+  "date": "2025-10-20",
+  "stance": "generic_59_ok",
+  "status": "superseded",
+  "anchor": {
+   "line": 39,
+   "quote": "append modifier 59 to the secondary procedure to indicate a distinct procedural service"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src002_03",
+  "text": "Aetna reconsiderations may also be submitted by mail using the paper Provider Dispute form (30–45 day turnaround).",
+  "speaker": "p_priya_nair",
+  "source_id": "src002",
+  "date": "2025-10-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 44,
+   "quote": "reconsiderations may also be submitted by mail using the paper Provider Dispute form"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src002_04",
+  "text": "For CO-197 (auth absent) denials, pull the auth record and verify the authorization was issued under the same NPI billed on the claim before resubmitting.",
+  "speaker": "p_priya_nair",
+  "source_id": "src002",
+  "date": "2025-10-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "verify the authorization was issued under the same NPI billed on the claim before resubmitting"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src003_01",
+  "text": "Every appeal package must include a copy of the remittance advice, the corrected claim, and a cover letter stating the reconsideration reason.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src003",
+  "date": "2025-11-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "a copy of the remittance advice, the corrected claim, and a cover letter"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src003_02",
+  "text": "Anthem reconsiderations are accepted within 120 days of the remittance date.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src003",
+  "date": "2025-11-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 36,
+   "quote": "reconsiderations accepted within 120 days of the remittance date"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src003_03",
+  "text": "MassHealth Board of Hearings appeals must be filed within 30 days of the notice date.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src003",
+  "date": "2025-11-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "Board of Hearings appeals must be filed within 30 days of the notice date"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src003_04",
+  "text": "Reconsideration requests to UnitedHealthcare must be submitted within 60 days of the remittance advice date. [SOP-007; superseded 2026-08-05 for delegated contracts — 90 days per §7.3.]",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src003",
+  "date": "2025-11-02",
+  "stance": "window_60d",
+  "status": "superseded",
+  "anchor": {
+   "line": 38,
+   "quote": "Reconsideration requests to UnitedHealthcare must be submitted within 60 days of the remittance advice date."
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src003_05",
+  "text": "Claims past the applicable reconsideration window require operations-manager approval before write-off, with the reason logged on the ticket.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src003",
+  "date": "2025-11-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 43,
+   "quote": "require operations-manager approval before write-off"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src004_01",
+  "text": "Itemized receipts are required for any expense over $25; expenses over $500 need CFO approval.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src004",
+  "date": "2025-12-01",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "Itemized receipts are required for any expense over $25."
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src005_01",
+  "text": "Full-time employees accrue 15 days of PTO per year; up to 5 unused days carry over and expire March 31.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src005",
+  "date": "2026-01-05",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "accrue 15 days of PTO per year"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src006_01",
+  "text": "Access and disclose only the minimum necessary PHI; no PHI screenshots in Slack or tickets — reference claim IDs instead.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src006",
+  "date": "2026-01-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "minimum necessary PHI for the task at hand"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src006_02",
+  "text": "A signed BAA must be in place before any PHI is exchanged with a client, payer intermediary, or subprocessor.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src006",
+  "date": "2026-01-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "A signed BAA must be in place before any PHI is exchanged"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src006_03",
+  "text": "Confirmed breaches of unsecured PHI require notifying affected individuals within 60 days of discovery per the HIPAA Breach Notification Rule (unrelated to payer appeal deadlines).",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src006",
+  "date": "2026-01-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "notified within 60 days of discovery, per the HIPAA Breach Notification Rule"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src007_01",
+  "text": "MassHealth attachment pends currently run roughly 55–65 per week across clients, heaviest for Harbor Family Medicine.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src007",
+  "date": "2026-03-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "MassHealth pends currently run roughly 55–65 per week"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src007_02",
+  "text": "Requested pend documentation must be returned within 10 business days of the 277 RFI date.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src007",
+  "date": "2026-03-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "returned within 10 business days of the RFI date"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src007_03",
+  "text": "Current delivery method: upload via payer portal where supported, otherwise fax with the standard cover sheet, claim ID on every page.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src007",
+  "date": "2026-03-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "otherwise fax the documentation with the standard cover sheet"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src007_04",
+  "text": "The attachment control number must be recorded on the ticket before the pend task is closed.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src007",
+  "date": "2026-03-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "Record the attachment control number"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src008_01",
+  "text": "New claims-ops hires shadow Tom Reyes on the denial work queue for their first two weeks.",
+  "speaker": "p_priya_nair",
+  "source_id": "src008",
+  "date": "2026-06-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "on the denial work queue for the first two weeks"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src008_02",
+  "text": "The onboarding guide itself acknowledges that plenty of payer-specific tribal knowledge isn't written down — new hires are told to ask in #claims-ops when denials don't match the SOPs.",
+  "speaker": "p_priya_nair",
+  "source_id": "src008",
+  "date": "2026-06-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "plenty of payer-specific tribal knowledge isn't written down yet"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src009_01",
+  "text": "Lakeview Orthopedics went live 2026-03-02; first production batch of 412 claims submitted with zero front-end rejections.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src009",
+  "date": "2026-03-03",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "412 claims submitted, zero front-end rejections"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src009_02",
+  "text": "Lakeview's payer mix is ~55% Anthem, then UHC and some MassHealth on the PT side, with a busy PT department billing 97110/97140 pairs.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src009",
+  "date": "2026-03-03",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "Mostly [[payers/anthem]] (~55% of volume)"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src009_03",
+  "text": "Lakeview's PM system exports CPT units in a nested field flattened by our adapter — multi-unit therapy lines flagged as the most likely early failure spot.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src009",
+  "date": "2026-03-03",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "watch multi-unit therapy lines for the first few weeks"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src010_01",
+  "text": "Anthem denials spiked on Lakeview PT claims starting ~2026-03-12: all CO-97, all 97110+97140 same-day pairs, billed with modifier 59 as usual.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src010",
+  "date": "2026-03-18",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "all CO-97, all the 97110 + 97140 same-day pairs"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src010_02",
+  "text": "61 Anthem CO-97 denials on Lakeview therapy pairs over 3 remit days ($9,438 billed); Northside shows the same pattern at smaller volume.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src010",
+  "date": "2026-03-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "61 Anthem CO-97 denials on Lakeview therapy pairs over the last 3 remit days"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src010_03",
+  "text": "Anthem's March ClaimsXten release means generic modifier 59 no longer bypasses NCCI PTP edits; use the specific X-subset modifier (XS for distinct anatomic sites) instead.",
+  "speaker": "p_priya_nair",
+  "source_id": "src010",
+  "date": "2026-03-18",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "generic modifier 59 no longer bypasses their NCCI PTP edits"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src010_04",
+  "text": "The X-subset modifier must go on the column-2 code line, and the claim note needs a documentation pointer supporting the distinct site or Anthem's edit re-fires.",
+  "speaker": "p_priya_nair",
+  "source_id": "src010",
+  "date": "2026-03-18",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "it needs to go on the column-2 code line"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src010_05",
+  "text": "Platform can add a prefer_x_subset rule to the Anthem config to auto-swap 59→XS on known PTP pairs, plus line splitting for multi-unit therapy lines.",
+  "speaker": "p_jake_osei",
+  "source_id": "src010",
+  "date": "2026-03-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "add a `prefer_x_subset` rule to the anthem config"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src011_01",
+  "text": "Karen Doyle (Lakeview) reported batch CO-97 denials on PT claims that had paid identically in February, demanding an answer within the week.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src011",
+  "date": "2026-03-19",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "Why are these suddenly denying when the exact same visits paid in February?"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src011_02",
+  "text": "TK-1041 root cause: Anthem's March ClaimsXten update stopped honoring generic modifier 59 on NCCI PTP pairs; XS required on the column-2 line with a documentation pointer.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src011",
+  "date": "2026-03-19",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "Anthem's March ClaimsXten update stopped honoring generic modifier 59"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src011_03",
+  "text": "TK-1041 outcome: 54 of 61 corrected claims paid by 2026-04-03 ($8,301 recovered), remainder in normal adjudication with no new CO-97s.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src011",
+  "date": "2026-03-19",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 35,
+   "quote": "54 of 61 corrected claims paid as of today's remit"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src012_01",
+  "text": "Harbor case raised: a claim denied in Feb for no coverage; the patient was then granted MassHealth retroactively with coverage backdated to January — can it be rebilled?",
+  "speaker": "p_tom_reyes",
+  "source_id": "src012",
+  "date": "2026-04-02",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "can we… rebill that? how does that even work"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src012_02",
+  "text": "Retro-eligibility step 1: verify the retroactive coverage span in EVS/MMIS and see the eligibility segment covering the DOS before touching the claim.",
+  "speaker": "p_priya_nair",
+  "source_id": "src012",
+  "date": "2026-04-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "verify the retroactive coverage span in EVS/MMIS"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src012_03",
+  "text": "Retro-eligibility rebills are NEW claims (not adjustments), and timely filing runs 90 days from the eligibility determination date, not the date of service.",
+  "speaker": "p_priya_nair",
+  "source_id": "src012",
+  "date": "2026-04-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "You get 90 days from the determination date to submit"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src012_04",
+  "text": "(Pre-July rule) No attachment is needed on a retro-eligibility rebill when EVS shows the span — the eligibility record is the proof. [Superseded by the 2026-07-01 MassHealth bulletin: delay-reason code 9 + determination letter now required.]",
+  "speaker": "p_priya_nair",
+  "source_id": "src012",
+  "date": "2026-04-02",
+  "stance": "no_attachment_needed",
+  "status": "superseded",
+  "anchor": {
+   "line": 23,
+   "quote": "No attachment is needed when EVS shows the span"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src012_05",
+  "text": "Priya is the only person who has done retro-eligibility rebills end to end; the process is undocumented and she asks to be grabbed before submissions.",
+  "speaker": "p_priya_nair",
+  "source_id": "src012",
+  "date": "2026-04-02",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "I'm the only one who's done these end to end"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src013_01",
+  "text": "(Independent expert confirmation) Anthem's Q1 ClaimsXten release changed PTP bypass behavior: plain modifier 59 is effectively dead at Anthem for therapy pairs; the engine wants specific X modifiers (XS for distinct structure) with a documentation pointer.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "Plain 59 is effectively dead at Anthem for these pairs."
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src013_02",
+  "text": "The edit fires on the column-2 code of the PTP pair, so the X modifier must ride the column-2 line — an X modifier on the column-1 line does nothing.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "the X modifier has to ride the column-2 line"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src013_03",
+  "text": "Anthem auto-flags multi-unit therapy lines at unit thresholds; splitting units across separate claim lines keeps claims under the threshold and materially drops edit hits.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "If you split units across separate claim lines instead of stacking them"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src013_04",
+  "text": "BrightPath's API program is the most mature of the New England regionals — real FHIR R4 claim submission and status, not a portal scrape; the right payer to prove out API-first claims flow with.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "BrightPath's API program is the most mature by a wide margin"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src013_05",
+  "text": "Expect Anthem to extend X-subset enforcement to more code pairs in the Q4 edit release — build the automation per-pair-configurable, not hardcoded to 97110/97140.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "expect Anthem to extend the X-subset enforcement to more code pairs"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src013_06",
+  "text": "BrightPath pilot caveats: contract terms allow API changes on 30 days' notice and the claims-status latency SLA is aspirational.",
+  "speaker": "p_vik_malhotra",
+  "source_id": "src013",
+  "date": "2026-04-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "change the API with 30 days' notice"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src014_01",
+  "text": "The UHC reconsideration window is not one number — it depends on the network agreement type; the commonly quoted 60-day window is UHC's standard administrative policy for non-delegated participating providers.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "the reconsideration window isn't one number at UHC"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src014_02",
+  "text": "UHC delegated-credentialing contracts: 90-day reconsideration window per §7.3. Section 7.3 ('Provider Disputes and Reconsiderations') provides ninety days from the remittance advice date, and as negotiated contract language it controls over the provider-manual default.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "UHC delegated-credentialing contracts: 90-day reconsideration window per §7.3."
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src014_03",
+  "text": "The 60-day figure remains correct for standard non-delegated contracts; the failure mode is applying the provider-manual default to a negotiated agreement.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "remains correct for any standard, non-delegated contract"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src014_04",
+  "text": "Filing mechanics for delegated disputes: use the delegated-portal dispute queue (the standard queue may auto-reject on the 60-day timer), cite §7.3 explicitly in the cover letter, and attach the legal memo.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 30,
+   "quote": "File through the delegated-portal dispute queue"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src014_05",
+  "text": "Applied ruling: the day-71 Harbor claim (CLM-2026-19882) is timely under §7.3 with 19 days of margin — proceed, no write-off.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "Under §7.3 it is timely, with 19 days of margin."
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src014_06",
+  "text": "Rachel's prevention advice: update the SOP with both windows keyed to contract type, and build a delegated-vs-standard client roster so the window is a lookup, not a judgment call. Decision recorded: file both Harbor claims 8/6.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src014",
+  "date": "2026-08-05",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "inventory which of your clients are on delegated agreements"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src015_01",
+  "text": "TK-1063 case: Harbor claim CLM-2026-11203 (DOS 2026-02-11, $214) denied for no coverage; patient's MassHealth application approved 2026-03-28 with coverage retroactive to mid-January.",
+  "speaker": "p_amy_tran",
+  "source_id": "src015",
+  "date": "2026-04-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "approved on 2026-03-28 with coverage retroactive to mid-January"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src015_02",
+  "text": "EVS span check (done with Priya) showed the retro segment running 2026-01-17 through present, covering the 2/11 DOS; the span-segment reading has gotchas Tom couldn't have caught alone.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src015",
+  "date": "2026-04-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "retro segment 2026-01-17 through present, covers the 2/11 DOS"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src015_03",
+  "text": "Priya flagged on the ticket that the retro-eligibility process lives entirely in her head and needs documenting.",
+  "speaker": "p_priya_nair",
+  "source_id": "src015",
+  "date": "2026-04-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "this process lives entirely in my head"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src015_04",
+  "text": "TK-1063 outcome: rebilled claim paid 2026-05-08, $214 allowed against the retro span, no pend.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src015",
+  "date": "2026-04-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 35,
+   "quote": "$214 allowed against the retro span"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src016_01",
+  "text": "Northside reported recurring Anthem CO-97 denials on rehab therapy visits into late April — billers re-doing work weekly despite the March fix.",
+  "speaker": "p_luis_romero",
+  "source_id": "src016",
+  "date": "2026-04-21",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "We're still getting [[payers/anthem]] CO-97 denials on rehab therapy visits"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src016_02",
+  "text": "Northside's recurrence cause: their billers keep hand-keying new claims with plain 59, so each fresh batch re-hits Anthem's edit — the March fix was a rebill, not prevention.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src016",
+  "date": "2026-04-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "their billers keep submitting new claims with plain 59"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src016_03",
+  "text": "Northside prevention needs biller training on X-subset usage in addition to the scrubber auto-swap, because they submit more hand-keyed claims than Lakeview.",
+  "speaker": "p_priya_nair",
+  "source_id": "src016",
+  "date": "2026-04-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "prevention has to include the humans"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src016_04",
+  "text": "TK-1077 outcome: rebilled 4/22 and 4/29 batches paying (34/38 clean by 5/6); training request handed to Dana for the June client call.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src016",
+  "date": "2026-04-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "34 of 38 clean so far"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src017_01",
+  "text": "Riverbend Imaging live since 2026-05-04 with a clean first batch and an empty denial queue.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "live since Monday (5/4), first batch clean"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src017_02",
+  "text": "BrightPath connector is roughly a 3-week build against their FHIR R4 sandbox (submission + status, no eligibility in pilot scope); mid-July sandbox certification feasible without touching committed client work.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "Connector is roughly a 3-week build against their FHIR R4 sandbox"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src017_03",
+  "text": "BrightPath pilot pricing is revenue-neutral; worth doing for the auto-adjudication data, with per-claim handling cost upside if the API holds.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "Pilot pricing is revenue-neutral"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src017_04",
+  "text": "DECISION (Grace Kim): run the BrightPath pilot in Q3, limited to Summit Behavioral Health only, revisit at 90 days with adjudication data — rationale: bounded downside, Vik-validated counterparty, strategic read on API-first claims flow.",
+  "speaker": "p_grace_kim",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "limited to [[clients/summit-behavioral-health]] claims only, and revisit at 90 days"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src017_05",
+  "text": "Sofia asked whether the retro-eligibility process is written anywhere yet or still ask-Priya.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "is that process written anywhere yet, or is it still ask-Priya?"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src017_06",
+  "text": "Retro-eligibility remains undocumented ('still ask-me'); the EVS span reading is the part people get wrong.",
+  "speaker": "p_priya_nair",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 39,
+   "quote": "Still ask-me. It's on the someday-doc pile"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src017_07",
+  "text": "Harbor Family Medicine's level-4 E/M share is running ~20 points above the family-medicine benchmark (heavy 99214 volume vs MGMA distributions); Clarion should sample-audit the documentation before a payer does.",
+  "speaker": "p_priya_nair",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 45,
+   "quote": "level-4 share is running ~20 points above benchmark"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src017_08",
+  "text": "Elena agreed to the audit-first approach and committed to finding an external coding-compliance reviewer for the fall.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src017",
+  "date": "2026-05-06",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 47,
+   "quote": "I'll look into an external coding-compliance reviewer for the fall"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src018_01",
+  "text": "Copilot answer (per SOP-001): 837 front-end rejections are corrected at the source (never hand-edited in the clearinghouse UI) and resubmitted within 2 business days; crosswalk fixes go through a config ticket to Jake.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src018",
+  "date": "2026-02-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "fix at the source — correct the rendering NPI"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src019_01",
+  "text": "CO-97 means the service is considered bundled into another adjudicated service; CO-4 means the procedure code is inconsistent with (or missing) a modifier.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src019",
+  "date": "2026-04-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "the payer considers it bundled"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src019_02",
+  "text": "The Anthem March denials present as CO-97 rather than CO-4 because the modifier isn't invalid — it's no longer sufficient to bypass the edit.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src019",
+  "date": "2026-04-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "the modifier isn't invalid (that would be CO-4), it's no longer sufficient"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src020_01",
+  "text": "Marcus asked Copilot to restate the BrightPath pilot decision terms for the eng kickoff; recap: Q3 pilot, Summit only, 90-day revisit, Marcus's connector due for Jul 15 sandbox certification.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src020",
+  "date": "2026-05-14",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "what exactly did we commit to on the brightpath pilot?"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src020_02",
+  "text": "Eng kickoff doc records the API-stability caveat: BrightPath can change the API on 30 days' notice, so the connector is version-pinned with a thin adapter.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src020",
+  "date": "2026-05-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "we version-pin and keep the adapter thin"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src021_01",
+  "text": "TK-1112 scope: FHIR R4 connector for BrightPath pilot — claim submission + status only, eligibility out of scope, Summit volume only; targets Jul 15 certification, Aug 1 go-live.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src021",
+  "date": "2026-05-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "claim submission + claim status resources only, eligibility explicitly out of pilot scope"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src021_02",
+  "text": "Summit BAA amendment fully signed 2026-06-10 after Elena's compliance review, clearing the contract-side blocker.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src021",
+  "date": "2026-05-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "Summit BAA amendment fully signed as of today"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src021_03",
+  "text": "BrightPath sandbox certification passed 2026-07-12 — all 14 certification scenarios green on the first formal run, three days ahead of target.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src021",
+  "date": "2026-05-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "Sandbox certification PASSED"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src021_04",
+  "text": "BrightPath pilot went to production 2026-08-01; first 9 Summit claims submitted via API were acknowledged in under 10 seconds; payer config (routing, 15-min status polling, alerting) went live 7/30.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src021",
+  "date": "2026-05-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 38,
+   "quote": "First 9 Summit claims submitted via API this morning"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src022_01",
+  "text": "Dana escalated TK-1088: Lakeview's $38,450 arthroscopy claim denied CO-197, 5 weeks old, biggest claim of their quarter — Karen called directly rather than using the portal.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src022",
+  "date": "2026-05-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "Karen called me directly, not the portal"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src022_02",
+  "text": "Relationship risk flagged: the stuck claim on top of the March mod-59 mess is becoming an 'is Clarion actually working' narrative at Lakeview.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src022",
+  "date": "2026-05-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "is Clarion actually working"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src022_03",
+  "text": "TK-1088 diagnosis: the prior auth was issued under the group NPI while the claim billed the rendering NPI where the auth-match looks — the exact CO-197 pattern in SOP-002.",
+  "speaker": "p_priya_nair",
+  "source_id": "src022",
+  "date": "2026-05-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "the auth was issued under the group NPI, claim billed with the rendering NPI"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src022_04",
+  "text": "Expectation set: corrected claim + Anthem reprocessing review usually lands in 3–6 weeks; Priya chasing weekly.",
+  "speaker": "p_priya_nair",
+  "source_id": "src022",
+  "date": "2026-05-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "corrected claim + reprocessing review usually lands in 3–6 weeks with Anthem"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src023_01",
+  "text": "TK-1088 case: CLM-2026-18874, shoulder arthroscopy with rotator cuff repair (CPT 29827), DOS 2026-04-22, $38,450 to Anthem, denied CO-197 on the 5/20 EOB despite an existing prior authorization.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src023",
+  "date": "2026-05-27",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "shoulder arthroscopy with rotator cuff repair (CPT 29827), DOS 2026-04-22, billed $38,450"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src023_02",
+  "text": "Auth AUTH-88231-A exists in the payer portal (dated 4/10, correct CPT) — the denial was a match failure, not a missing auth.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src023",
+  "date": "2026-05-27",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "Confirmed auth AUTH-88231-A exists in the payer portal"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src023_03",
+  "text": "Root cause: authorization issued under Lakeview's group NPI, claim billed with the rendering surgeon's NPI in the loop the auth-match reads; fix is a corrected claim with billing config matched to how the auth was issued.",
+  "speaker": "p_priya_nair",
+  "source_id": "src023",
+  "date": "2026-05-27",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 29,
+   "quote": "issued under Lakeview's **group** NPI"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src023_04",
+  "text": "TK-1088 outcome: paid 2026-08-14 — $36,912 allowed ($1,538 contractual adjustment), auth matched, no further denial codes, after a provider-rep reprocessing escalation and a payer-side migration delay.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src023",
+  "date": "2026-05-27",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 41,
+   "quote": "PAID on today's remit: $36,912 allowed"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src024_01",
+  "text": "Sofia's draft May MBR showed Northside's denial rate at 14.3% vs 8.1% in April — nearly doubling with no change in submission mix. [Superseded: the number was a reporting-mart artifact; true rate 8.2%.]",
+  "speaker": "p_sofia_chen",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "rate_spiked",
+  "status": "superseded",
+  "anchor": {
+   "line": 13,
+   "quote": "May denial rate is coming out at **14.3%**"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src024_02",
+  "text": "Dana held the number from the client — Luis would escalate to his CFO within the hour if he saw 14%.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "please do not send that number anywhere yet"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src024_03",
+  "text": "Operational gut-check: no Northside denial wave was felt in the daily queue, so suspect the report before the claims.",
+  "speaker": "p_priya_nair",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "I'd suspect the report before the claims."
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src024_04",
+  "text": "Jake's hypothesis: the spike smells like the 2026.05.12 release — the claim status enum changed and the reporting-mart mapping table was on the 'verify later' list.",
+  "speaker": "p_jake_osei",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "this smells like the May release"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src024_05",
+  "text": "Confirmed 6/8: pends (pended_payer_request, awaiting_attachment) were miscounted as denials after the 5/12 release; Northside's true May denial rate recomputes to ~8.2%, in line with April.",
+  "speaker": "p_jake_osei",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "true May denial rate recomputes to **~8.2%**"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src024_06",
+  "text": "Corrected MBR re-run on fixed data, delivered to Luis with a one-line reporting-fix note by Thursday.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src024",
+  "date": "2026-06-04",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "re-running the MBR on corrected data"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src025_01",
+  "text": "Sofia asked Copilot for ranked plausible causes of a 6-point single-month denial-rate jump with no submission-mix change.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src025",
+  "date": "2026-06-05",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "What are the plausible causes, ranked?"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src025_02",
+  "text": "Copilot's top-ranked hypothesis: a reporting/definition change — a release altering claim-state semantics can shift the numerator without real denial change; discriminating test is reconciling mart counts against raw 835 CARCs.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src025",
+  "date": "2026-06-05",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 18,
+   "quote": "A release that alters claim-state semantics can shift the numerator"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src026_01",
+  "text": "Postmortem root cause: release 2026.05.12 renamed the claim-state enum; the un-updated mart mapping let pended_payer_request and awaiting_attachment fall through the default into denied_other — every pend counted as a denial from 5/12 on.",
+  "speaker": "p_jake_osei",
+  "source_id": "src026",
+  "date": "2026-06-10",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "fell through the mapping default into `denied_other`"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src026_02",
+  "text": "Impact: May denial rates overstated for every client; Northside's draft MBR showed 14.3% against a true rate of 8.2%. The wrong number was caught in draft and never reached a client.",
+  "speaker": "p_jake_osei",
+  "source_id": "src026",
+  "date": "2026-06-10",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "showed 14.3% against a true rate of 8.2%"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src026_03",
+  "text": "Contributing factor: the mapping's silent default bucketed unknown states — silent defaults turn schema drift into wrong numbers rather than errors.",
+  "speaker": "p_jake_osei",
+  "source_id": "src026",
+  "date": "2026-06-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "silent defaults turn schema drift into wrong numbers"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src026_04",
+  "text": "Prevention shipped: mapping v2 with fail-loud default, May backfill, and a per-release regression test reconciling mart totals vs raw 835 CARC counts at 0.2% tolerance.",
+  "speaker": "p_jake_osei",
+  "source_id": "src026",
+  "date": "2026-06-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "mart totals vs raw 835 CARC counts, 0.2% tolerance"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src026_05",
+  "text": "The metric definition was never wrong: denial rate remains CARC-denied claims ÷ adjudicated claims, pends excluded.",
+  "speaker": "p_jake_osei",
+  "source_id": "src026",
+  "date": "2026-06-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "denial rate remains CARC-denied claims ÷ adjudicated claims, pends excluded"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src027_01",
+  "text": "TK-1102 scope: mart-computed May denial rates disagree with raw 835 CARC counts (Northside: mart 14.3% vs raw ~8%); MBRs held pending reconciliation.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src027",
+  "date": "2026-06-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "mart says 14.3%, raw CARCs suggest ~8%"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src027_02",
+  "text": "Reproduction: mart counted 402 Northside May claims as denied vs 231 with real denial CARCs in raw 835s; the 171 difference equals the pend count.",
+  "speaker": "p_jake_osei",
+  "source_id": "src027",
+  "date": "2026-06-08",
+  "stance": "reporting_artifact",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "402 claims; raw 835s show 231 claims"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src027_03",
+  "text": "Fix merged 6/9: mart mapping v2 with explicit state rows and a fail-loud default (unknown state = pipeline error, not a silent bucket); backfill + regression test followed.",
+  "speaker": "p_jake_osei",
+  "source_id": "src027",
+  "date": "2026-06-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "fail-loud default"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src028_01",
+  "text": "Luis's asks: a live denial dashboard (not a monthly PDF), batch eligibility checking for their athenahealth schedule, and XS-modifier training for his billers.",
+  "speaker": "p_luis_romero",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "a live dashboard, not a monthly PDF"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src028_02",
+  "text": "Dana committed: dedicated Northside denial dashboard live by July 15.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "live by **July 15**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src028_03",
+  "text": "Marcus committed: batch eligibility API for Northside's athenahealth schedule by August 1 — 'a thin API on plumbing we already run.'",
+  "speaker": "p_marcus_webb",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "you'll have it by **August 1**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src028_04",
+  "text": "Priya committed: 45-minute XS-modifier training session for Northside billers before the end of July, bringing the Anthem pair table.",
+  "speaker": "p_priya_nair",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "45-minute session for your billers before the end of July"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src028_05",
+  "text": "Dana committed: standing monthly check-in call, first Wednesday cadence, starting September 3.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "first Wednesday monthly, starting **September 3**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src028_06",
+  "text": "Luis on the 14% draft that never reached him: 'keep checking your numbers before they reach me' — he manages on commitments and will manage Clarion the same way.",
+  "speaker": "p_luis_romero",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "keep checking your numbers before they reach me"
+  },
+  "topics": [
+   "top_denial_reporting"
+  ]
+ },
+ {
+  "id": "clm_src028_07",
+  "text": "On MassHealth attachment turnaround, Priya said only that the pend process is manual today and the longer-term approach is under internal discussion — explicitly no commitment made.",
+  "speaker": "p_priya_nair",
+  "source_id": "src028",
+  "date": "2026-06-17",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 33,
+   "quote": "the longer-term approach is under internal discussion"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src029_01",
+  "text": "IT notice: the 'Updated Payer Agreement' DocuSign email from docusign-secure-notify.com is a phishing attempt; report via Phish Alert, real payer docs route only through Dana or Elena.",
+  "speaker": "p_jake_osei",
+  "source_id": "src029",
+  "date": "2026-06-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "**This is a phishing attempt.**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src030_01",
+  "text": "Karen at the QBR: two months of Anthem denial cleanup plus the stuck $38k surgery claim have surgeons asking weekly whether switching to Clarion was a mistake.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "surgeons asking me weekly whether switching to Clarion was a mistake"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src030_02",
+  "text": "Karen's explicit renewal warning: 'our renewal in September is not a rubber stamp.'",
+  "speaker": "p_karen_doyle",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "our renewal in September is not a rubber stamp"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src030_03",
+  "text": "Lakeview denial-rate trajectory: March 11.9% (mod-59 spike), April 7.4%, May 5.9% — May below the ~7.5% pre-switch baseline.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "March 11.9% (the mod-59 spike), April 7.4%, May 5.9%"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src030_04",
+  "text": "March CO-97 wave recovery: 58 of 61 claims paid after XS correction; 3 correctly written off where documentation didn't support distinct sites; zero new plain-59 batches since mid-May.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "58 of 61 now paid after XS correction"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src030_05",
+  "text": "$38k claim status at QBR: corrected claim in Anthem adjudication with auth matched, reprocessing review requested, no committed payment date.",
+  "speaker": "p_priya_nair",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "no committed payment date"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src030_06",
+  "text": "DECISION — Lakeview remediation plan of record: weekly denial digest (Dana, from 6/29), XS retraining (Priya, by 7/10), Anthem auto line-split + X-subset config (Marcus, by 6/30), monthly quality report (Sofia, first issue Aug 25).",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "the recovery plan of record"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src030_07",
+  "text": "Karen tied renewal directly to the plan: 'Deliver this plan and September gets a lot easier' — she wants Clarion to work.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src030",
+  "date": "2026-06-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 41,
+   "quote": "Deliver this plan and September gets a lot easier."
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src031_01",
+  "text": "anthem.yaml now auto-swaps generic modifier 59 to the specific X-subset modifier on configured NCCI PTP pairs, column-2 placement, documentation pointer required.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src031",
+  "date": "2026-06-30",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "swap generic 59 -> specific X modifier"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src031_02",
+  "text": "anthem_line_split enabled: multi-unit therapy lines split at max 4 units/line to stay under ClaimsXten's manual-review threshold (codes 97110/97112/97140/97530).",
+  "speaker": "p_marcus_webb",
+  "source_id": "src031",
+  "date": "2026-06-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "max_units_per_line: 4"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src031_03",
+  "text": "Changelog 2026-06-30 (Marcus): both rules enabled on time for the QBR commitment to Lakeview; pairs table is per-pair configurable anticipating Anthem's Q4 edit expansion.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src031",
+  "date": "2026-06-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 47,
+   "quote": "Enabled anthem_line_split + prefer_x_subset"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src032_01",
+  "text": "Nina followed SOP-002 §4 on an Anthem CO-97 therapy denial — prepped a corrected claim with modifier 59 per the doc — and the resubmission preview flagged it would deny again.",
+  "speaker": "p_nina_park",
+  "source_id": "src032",
+  "date": "2026-07-14",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "so I prepped a corrected claim with 59"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src032_02",
+  "text": "Tom's answer to Nina: the SOP is out of date for Anthem — since March, XS on the column-2 line + documentation pointer; the scrubber auto-swaps configured pairs, which is why the preview flagged her manual 59.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src032",
+  "date": "2026-07-14",
+  "stance": "x_subset_required",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "the SOP is out of date for Anthem specifically"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src032_03",
+  "text": "Priya's count on the record: at least the fourth time this year someone needed the Anthem X-subset answer (Tom in March, Karen via ticket, Dana on the Vik call, now Nina) — SOP-002 §4 still says the pre-March thing.",
+  "speaker": "p_priya_nair",
+  "source_id": "src032",
+  "date": "2026-07-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "**fourth time this year**"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src032_04",
+  "text": "Nina's gap statement: a two-line box in the SOP ('Anthem: use XS on column-2, not 59') would have saved her a day.",
+  "speaker": "p_nina_park",
+  "source_id": "src032",
+  "date": "2026-07-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "would've saved me a day"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src033_01",
+  "text": "Q2 recap: just over 1.9 million claims processed, up 22% year over year, at flat team size.",
+  "speaker": "p_grace_kim",
+  "source_id": "src033",
+  "date": "2026-07-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "just over 1.9 million claims in the quarter, up 22% year over year"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src033_02",
+  "text": "Benefits: 401(k) match rises from 3% to 4% starting with the September 1 payroll; open enrollment moves to early November.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src033",
+  "date": "2026-07-10",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "401(k) match goes from 3% to 4%"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src034_01",
+  "text": "MassHealth attachment pends hit 71 this week vs the usual 55–65, consuming ~9 hours/week of manual RFI-reading, doc-pulling, faxing, and logging per SOP-011.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "attachment pends hit **71 this week**"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_02",
+  "text": "Marcus's position: build an API-pull responder — consume the 277 RFI, auto-match the claim, submit documentation via the 275 transaction, log acks. Two sprints; turns the manual hours into a monitoring dashboard.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "api_pull",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "we should build the API path"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_03",
+  "text": "Priya's position: prevent the pend instead — attach documentation proactively at submission (via fax, works today) for the predictable trigger types (therapy notes, TPL forms); she doesn't trust MassHealth's electronic attachment intake.",
+  "speaker": "p_priya_nair",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "proactive_fax",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "attach the documentation proactively at submission"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_04",
+  "text": "Marcus's rebuttal: proactive attaching wastes handling on the ~80% of flagged claims that never pend, and fax becomes a decade-long architectural hole.",
+  "speaker": "p_marcus_webb",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "api_pull",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "that's wasted handling on ~80% of them"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_05",
+  "text": "Priya's rebuttal: the asymmetry favors prevention — a wasted fax page vs 3–6 weeks of client payment delay per pend; and the 275 intake losing documents turns the API pipeline into deterministic resubmissions.",
+  "speaker": "p_priya_nair",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "proactive_fax",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "Prevention beats faster reaction."
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_06",
+  "text": "Jake's neutral test data: MassHealth's 275 endpoint acks the happy path but silently drops attachments over 8MB, and ack codes don't distinguish received from claim-linked — two June electronic responses were received-but-never-linked. Both approaches have a real failure mode.",
+  "speaker": "p_jake_osei",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "drops attachments over 8MB silently"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src034_07",
+  "text": "Tom asked directly which way the team is going; the only answer was to schedule a sync — no direction chosen in the thread.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src034",
+  "date": "2026-07-09",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "which way are we going? asking for my calendar"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_01",
+  "text": "Backlog framing at the sync: 55–65 pends/week through spring, 70+ the last two weeks, heaviest for Harbor; the manual process is ~9 hrs/week and growing.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "70+ the last two weeks"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_02",
+  "text": "Position A (Marcus, standing): API-pull responder via 277 RFI → 275 transaction, 2-sprint estimate, near-zero marginal cost per pend after build, fully logged. 'Our attachment answer cannot be a fax machine.'",
+  "speaker": "p_marcus_webb",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "api_pull",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "our attachment answer cannot be a fax machine"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_03",
+  "text": "Position B (Priya, standing): proactively attach documentation at submission for predictable trigger types — prevents the 3–6 week pend delay entirely, zero build, works today by fax; the electronic intake is unreliable per Jake's own June testing.",
+  "speaker": "p_priya_nair",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "proactive_fax",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "Prevent the pend instead of answering it faster"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_04",
+  "text": "Jake at the sync (neutral): both failure modes are real, and the 275 intake issues are payer-side with no published fix timeline.",
+  "speaker": "p_jake_osei",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 30,
+   "quote": "both failure modes are real"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_05",
+  "text": "Dana's client lens: Harbor feels the pend delay acutely and either path beats the status quo, but she has no basis to pick between them.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "no basis to pick between them"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_06",
+  "text": "OUTCOME: no decision — neither position moved; the attachment strategy question is tabled to Q4 planning and the SOP-011 manual process continues unchanged in the interim.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 35,
+   "quote": "**No decision.** Neither position moved."
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src035_07",
+  "text": "MassHealth's July 1 All-Provider Bulletin: retro-eligibility replacement claims must now carry delay-reason code 9 and attach the eligibility determination letter — EVS span alone no longer suffices. The 90-day determination-date window is unchanged.",
+  "speaker": "p_priya_nair",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "attachment_now_required",
+  "status": "current",
+  "anchor": {
+   "line": 39,
+   "quote": "delay-reason code 9** and attach the **eligibility determination letter"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src035_08",
+  "text": "Q3 engineering capacity is fully committed (BrightPath pilot, Northside API), which is why the attachment strategy waits for Q4 planning.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src035",
+  "date": "2026-07-16",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 35,
+   "quote": "Q3 engineering capacity is committed"
+  },
+  "topics": [
+   "top_attachments_masshealth"
+  ]
+ },
+ {
+  "id": "clm_src036_01",
+  "text": "Commitment #1 delivered early: Northside denial dashboard live since July 14 with heavy day-one usage.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src036",
+  "date": "2026-07-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "Live since July 14 at your portal home."
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src036_02",
+  "text": "Commitment #3 booked: Priya's XS training session confirmed for July 22.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src036",
+  "date": "2026-07-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "confirmed for **July 22**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src036_03",
+  "text": "Commitment #2 slipping: the eligibility batch API is tracking to the first week of September instead of the committed August 1 — flagged to Luis proactively two weeks ahead.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src036",
+  "date": "2026-07-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "tracking to the **first week of September**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src036_04",
+  "text": "Slip reason (as of 7/18): BrightPath pilot certification consumed July's integration capacity.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src036",
+  "date": "2026-07-18",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "the BrightPath pilot certification consumed the integration capacity in July"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src037_01",
+  "text": "Nina asked whether an SOP exists for MassHealth retro-eligibility rebills after finding nothing in the four onboarding SOPs.",
+  "speaker": "p_nina_park",
+  "source_id": "src037",
+  "date": "2026-07-20",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "Is there an SOP for this?"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src037_02",
+  "text": "Copilot confirmed no SOP exists for retro-eligibility; the process is assembled from Slack and TK-1063, Priya is the only end-to-end expert with no documented backup, and her PTO (Aug 10–21) leaves at most Tom's one supervised case as coverage.",
+  "speaker": "p_nina_park",
+  "source_id": "src037",
+  "date": "2026-07-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "There is no documented backup for this process"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src038_01",
+  "text": "Aetna 270/271 eligibility requests began timing out at 09:14 on 7/21, climbing to a 61% timeout rate; other payer connections clean — Aetna-specific.",
+  "speaker": "p_jake_osei",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "now at **61% timeout rate** and holding"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src038_02",
+  "text": "Client impact confirmed live: Harbor's front desk couldn't verify Aetna patients at check-in, with Northside, Lakeview, and Riverbend expected as schedules filled.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "they can't verify Aetna patients at check-in"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src038_03",
+  "text": "Root-cause hypothesis at 11:45: the endpoint began presenting a cert chain with a different intermediate CA than our pinned bundle — mTLS handshake failure, confirmed by packet capture at 12:30.",
+  "speaker": "p_jake_osei",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "Aetna rotated their intermediate CA without notice"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src038_04",
+  "text": "Workaround live at 14:20: cached 271 responses served when ≤30 days old (labeled as cached), failed checks queued for overnight batch 270 — front desks functional again.",
+  "speaker": "p_jake_osei",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "**workaround live:**"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src038_05",
+  "text": "Outage notice + workaround explanation went to all four affected clients at 14:47; no PHI exposure — connectivity only.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "went to all four affected clients at 14:47"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src038_06",
+  "text": "Aetna's provider-tech line acknowledged the unannounced CA rotation at 16:50 ('planned maintenance, notification may not have reached all trading partners').",
+  "speaker": "p_jake_osei",
+  "source_id": "src038",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 37,
+   "quote": "acknowledged the CA rotation on their side"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src039_01",
+  "text": "INC-2026-007 scope: 2,347 eligibility checks failed or queued between 09:14 and the 14:20 workaround; root cause confirmed as Aetna's unannounced intermediate-CA rotation vs our pinned bundle.",
+  "speaker": "p_jake_osei",
+  "source_id": "src039",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "**2,347 eligibility checks failed or queued**"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src039_02",
+  "text": "Permanent fix deployed 7/23 in aetna.yaml: dual-bundle trust (legacy + new intermediate CA, fingerprint verified out-of-band) and exponential-backoff retry with jitter, reviewed by Marcus.",
+  "speaker": "p_jake_osei",
+  "source_id": "src039",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 30,
+   "quote": "dual-bundle trust carrying both the legacy and new intermediate CA"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src039_03",
+  "text": "Verification + prevention: 24h post-fix error rate at 0.3% baseline; cert-chain monitoring (expiry + chain-change detection) shipped 7/24 for ALL payer mTLS endpoints.",
+  "speaker": "p_jake_osei",
+  "source_id": "src039",
+  "date": "2026-07-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 33,
+   "quote": "error rate back to baseline (0.3%, normal noise)"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src040_01",
+  "text": "Overnight backfill processed all 2,347 queued eligibility checks (2,306 clean 271s); 41 members with cache older than 30 days were stale-flagged so ops re-verified before any claim release.",
+  "speaker": "p_jake_osei",
+  "source_id": "src040",
+  "date": "2026-07-22",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "2,347 queued checks processed, 2,306 returned clean 271s"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src040_02",
+  "text": "The 41 stale-flagged claims were re-verified live on 7/23: 39 clean, 2 true coverage terminations caught before submission. No claim released on stale eligibility.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src040",
+  "date": "2026-07-22",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "39 clean, 2 legitimately termed coverage"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src041_01",
+  "text": "aetna.yaml now runs dual-bundle mTLS trust (aetna-ca-2024 + aetna-ca-2026) with chain-change alerting, so unannounced CA rotations degrade gracefully instead of failing hard.",
+  "speaker": "p_jake_osei",
+  "source_id": "src041",
+  "date": "2026-07-23",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "ca_bundle: dual"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src041_02",
+  "text": "Retry policy is exponential backoff (base 400ms, max 4 attempts, jitter) replacing the tight loop that amplified load during the outage.",
+  "speaker": "p_jake_osei",
+  "source_id": "src041",
+  "date": "2026-07-23",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "policy: exponential_backoff"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src041_03",
+  "text": "The cached-eligibility fallback is formalized in config: cached 271 served on live-check failure with a 24-hour freshness TTL, mandatory stale labeling, and overnight batch-270 queuing.",
+  "speaker": "p_jake_osei",
+  "source_id": "src041",
+  "date": "2026-07-23",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 38,
+   "quote": "ttl_hours: 24"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_01",
+  "text": "Final incident numbers: ~5 hours degraded (09:14→14:20), 61% peak timeout rate, 2,347 checks failed/queued, four clients affected, zero stale-eligibility releases, zero PHI exposure.",
+  "speaker": "p_jake_osei",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "Final numbers for the record"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_02",
+  "text": "What didn't hold: no cert-chain monitoring existed (first signal was user-facing timeouts) and the tight-loop retry amplified load during the failure.",
+  "speaker": "p_jake_osei",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "we had no cert-chain monitoring"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_03",
+  "text": "DECISION (7/28): the cached-eligibility fallback becomes permanent and always-on — cached 271 on live-check failure, 24-hour freshness TTL, visible stale flag in the UI. Rationale: graceful degradation turned a lost clinic day into a 5-hour inconvenience; payer failures are a when, not an if.",
+  "speaker": "p_jake_osei",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "permanent, always-on capability"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_04",
+  "text": "Priya's caveat accepted into the decision: cached eligibility is a front-desk convenience, not a claims-release basis — scrub still requires a live-or-fresh check per SOP-001.",
+  "speaker": "p_priya_nair",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "not a claims-release basis"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_05",
+  "text": "Action items at review: cert-chain monitoring done 7/24; comms template done 7/25; eligibility-cache TTL for all payers (Marcus, due 9/5) open; outage runbook (Jake, due 8/15) open.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 36,
+   "quote": "Payer eligibility-outage **runbook**"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src042_06",
+  "text": "Client postscript: all four clients received the recap (Harbor: 'your cached mode saved our afternoon'); the outage week consumed the integration capacity earmarked for the Northside eligibility API, pushing it further into September.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src042",
+  "date": "2026-07-28",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 40,
+   "quote": "pushing that commitment further into September"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_01",
+  "text": "Postmortem timeline: degraded 09:14–14:20 EDT on 7/21 (61% peak timeouts); workaround at 14:20; client comms 14:47; Aetna acknowledgment 16:50; backfill 7/22; permanent fix 7/23; baseline + monitoring 7/24.",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "09:14 to 14:20 EDT"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_02",
+  "text": "Root cause: single-CA pinning met an unannounced payer-side intermediate-CA rotation — the pinning behaved as designed but the design assumed payers announce rotations.",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 38,
+   "quote": "the design assumed payers announce rotations"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_03",
+  "text": "Detection gap: the rotated chain was visible in Aetna's staging environment from 7/16 — cert-chain monitoring would have alerted days before user-facing impact.",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 38,
+   "quote": "visible in Aetna's staging environment from 7/16"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_04",
+  "text": "Impact summary: ~5 hours of degraded front-desk verification at four clients; 2,347 checks backfilled within 24h; 2 true coverage terminations caught; zero stale releases; zero PHI exposure.",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 42,
+   "quote": "2 true coverage terminations caught"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_05",
+  "text": "Honest cost logged: the remediation week displaced the Northside eligibility-API work — the outage is part of why that commitment slipped.",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 42,
+   "quote": "displaced the [[clients/northside-clinic]] eligibility-API work"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src043_06",
+  "text": "Open follow-ups from the postmortem: eligibility-cache TTL rollout to all payers (Marcus, 9/5) and the payer eligibility-outage runbook (Jake, 8/15).",
+  "speaker": "p_jake_osei",
+  "source_id": "src043",
+  "date": "2026-07-29",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 57,
+   "quote": "Payer eligibility-outage runbook"
+  },
+  "topics": [
+   "top_aetna_elig_api"
+  ]
+ },
+ {
+  "id": "clm_src044_01",
+  "text": "Karen's 7/30 heads-up: the $38,450 claim is still unpaid at day 99, defending the switch gets harder every Monday, and she took an intro call from another claims vendor as owed diligence.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src044",
+  "date": "2026-07-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "I took an intro call from another claims vendor"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src044_02",
+  "text": "Karen credited the remediation plan explicitly: digests genuinely useful, retraining stuck (no plain-59 claims since), June/July denial numbers the best from any vendor.",
+  "speaker": "p_karen_doyle",
+  "source_id": "src044",
+  "date": "2026-07-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "my billers haven't produced a plain-59 claim since the session"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src044_03",
+  "text": "Karen's explicit save conditions for the September renewal: (1) the claim PAID, (2) an August with no new fires — 'deliver those two things and I expect this renewal to be straightforward.'",
+  "speaker": "p_karen_doyle",
+  "source_id": "src044",
+  "date": "2026-07-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "(1) that claim PAID, and (2) an August with no new fires"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src044_04",
+  "text": "Dana escalated to Grace same day per the at-risk process, reading it as a winnable save with a concrete finish line, owning the weekly touchpoint through September.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src044",
+  "date": "2026-07-30",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "a genuinely winnable save"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src045_01",
+  "text": "TK-1130 case: two Harbor UHC denials for reconsideration — CLM-2026-20417 ($12,380, EOB 2026-06-18) and CLM-2026-19882 ($9,840, EOB 2026-05-26); Amy asked what the appeal deadline is.",
+  "speaker": "p_amy_tran",
+  "source_id": "src045",
+  "date": "2026-07-30",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "What's the deadline to appeal these?"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src045_02",
+  "text": "Elena's initial ruling per SOP-007: 60 days from remittance — the older claim at day 66 is past the window and a write-off pending ops-manager approval. [Superseded by the §7.3 ruling.]",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src045",
+  "date": "2026-07-30",
+  "stance": "window_60d",
+  "status": "superseded",
+  "anchor": {
+   "line": 30,
+   "quote": "day 66 — past the 60-day window"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src045_03",
+  "text": "Dana's challenge: Harbor is on a delegated-credentialing agreement — does the standard 60-day figure even apply? Requested Rachel's read before writing off $9,840.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src045",
+  "date": "2026-07-30",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 33,
+   "quote": "Does the standard 60-day figure even apply to delegated contracts?"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src045_04",
+  "text": "TK-1130 resolution: both reconsiderations filed 2026-08-06 (day 49 and day 72) via the delegated portal queue with §7.3 citations and Rachel's memo attached — no write-off.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src045",
+  "date": "2026-07-30",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 39,
+   "quote": "**timely under §7.3**"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_01",
+  "text": "Elena surfaced the TK-1130 conflict in #claims-ops: SOP-007's 60-day rule kills the older Harbor claim, but the SOP predates Clarion's delegated-credentialing setups — she doesn't know if 60 applies to them.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "The SOP predates our delegated setups."
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_02",
+  "text": "Tom noted the team has treated SOP-007's 60-day sentence 'as gospel all year.'",
+  "speaker": "p_tom_reyes",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "window_60d",
+  "status": "superseded",
+  "anchor": {
+   "line": 16,
+   "quote": "been treating that as gospel all year"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_03",
+  "text": "Dana pressed the real question: is 60 days right for a delegated contract, or just right for the context the November 2025 SOP was written in — $9,840 rides on the difference.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "is 60 days actually right for a delegated contract"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_04",
+  "text": "Priya routed rather than answered: contract interpretation belongs to Rachel Goldman, not ops memory or the SOP — she recalled delegated agreements having their own dispute-resolution section that overrides standard policy numbers.",
+  "speaker": "p_priya_nair",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "Get [[people/rachel-goldman]] on it."
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_05",
+  "text": "Elena's 8/6 loop-close: for delegated-credentialing contracts, §7.3 gives 90 days from the remittance date, not 60; the 60 applies only to standard non-delegated contracts; the day-72 claim is timely and both were filed.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "gives 90 days from the remittance date, not 60"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src046_06",
+  "text": "Interim rule of thumb until SOP-007 ships: delegated contract → 90 days per §7.3; non-delegated → 60 days; ask the contract type before writing anything off.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src046",
+  "date": "2026-08-03",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "**delegated contract → 90 days per §7.3; non-delegated → 60 days.**"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src047_01",
+  "text": "Nina asked Copilot how long Clarion has to file a UHC reconsideration after a denial.",
+  "speaker": "p_nina_park",
+  "source_id": "src047",
+  "date": "2026-08-03",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "how long do we have to file a UHC reconsideration"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src047_02",
+  "text": "Copilot answered from stale SOP-007: 60 days from the remittance advice date, calling the SOP 'the operative document until someone with authority says otherwise' — two days before the §7.3 ruling superseded it for delegated contracts.",
+  "speaker": "p_nina_park",
+  "source_id": "src047",
+  "date": "2026-08-03",
+  "stance": "window_60d",
+  "status": "superseded",
+  "anchor": {
+   "line": 22,
+   "quote": "SOP-007 is the operative document until someone with authority says otherwise"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src048_01",
+  "text": "Written memo: §7.3 of the delegated-credentialing participation agreement provides reconsiderations within ninety (90) days of the remittance advice date, controlling over the 60-day provider-manual default that governs only non-delegated participation.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src048",
+  "date": "2026-08-06",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "within ninety (90) days of the date of the remittance advice"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src048_02",
+  "text": "Memo application: Harbor participates under the delegated form; CLM-2026-19882 at day 72 is timely under §7.3, CLM-2026-20417 at day 49 timely under either standard.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src048",
+  "date": "2026-08-06",
+  "stance": "window_90d_delegated",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "is at day 72 as of today's filing — **timely under §7.3**"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src048_03",
+  "text": "Memo recommendations: correct SOP-007 with both windows keyed to contract type, and complete a delegated-vs-standard roster of clients with UHC volume so the window is a lookup.",
+  "speaker": "p_rachel_goldman",
+  "source_id": "src048",
+  "date": "2026-08-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "Correct SOP-007 to state both windows keyed to contract type"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src048_04",
+  "text": "Both Harbor reconsiderations filed 2026-08-06 15:40 via the delegated queue with §7.3 cited and the memo attached; Amy's reaction: 'you just un-wrote-off ten thousand dollars.'",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src048",
+  "date": "2026-08-06",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "Both filed at 15:40 via the delegated queue"
+  },
+  "topics": [
+   "top_timely_filing_uhc"
+  ]
+ },
+ {
+  "id": "clm_src049_01",
+  "text": "Cedar Point rejected the +12% proposal ($0.94/claim) and relayed a competing quote at $0.71/claim — 15% below current price; tone warm, a price conversation not a quality one.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "a competing quote at **$0.71 per claim**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_02",
+  "text": "Cedar Point economics: 41,200 claims/yr at $0.84 blended (~$34.6k ARR), 62% gross margin — pediatric claims are clean and cheap to process.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 22,
+   "quote": "Gross margin on the account: **62%**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_03",
+  "text": "Cedar Point runs the lowest support load in the book: 0.4 tickets per 1,000 claims.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "0.4 tickets per 1,000 claims"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_04",
+  "text": "The churn math: at 62% margin even a flat renewal beats replacement — sales + onboarding + ramp on a new logo exceeds three years of any concession; losing a healthy account over single digits is economically illiterate.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 26,
+   "quote": "exceeds three years of any concession"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_05",
+  "text": "Cedar Point quality: 94.1% first-pass acceptance — their clean claims are part of why the margin is good; Sofia to package the stats so the number argues for Clarion.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "94.1% first-pass acceptance"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_06",
+  "text": "Counter strategy agreed: +6% ($0.89) with a 2-year term, vaccine-inventory billing module (list $450/mo) included at no charge — structurally different from a bare per-claim price.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 34,
+   "quote": "Counter at **+6% ($0.89) with a 2-year term**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src049_07",
+  "text": "Grace approved the strategy and set the walk-away floor at +4% with the module included — below that she takes the churn risk rather than repricing the book ('every account watches what the squeaky one gets').",
+  "speaker": "p_grace_kim",
+  "source_id": "src049",
+  "date": "2026-08-08",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 36,
+   "quote": "the **walk-away floor is +4%**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src050_01",
+  "text": "Cedar Point's formal counter (8/11): match the $0.71 competitor quote or they take a 1-year at current price while evaluating; their admin volunteered that switching costs worry the physicians.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src050",
+  "date": "2026-08-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 15,
+   "quote": "match the $0.71 competitor quote"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src050_02",
+  "text": "Wanda ruled out matching (8/13): $0.71 is below fully-loaded cost on their mix — a competitor sustains it only as an intro rate or by stripping the service layer; strategy holds.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src050",
+  "date": "2026-08-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "Matching $0.71 is off the table"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src050_03",
+  "text": "The 8/18 vaccine-module demo turned the negotiation — flu-season inventory billing is their acknowledged nightmare; their admin: 'send us the full offer, the module changes the math.'",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src050",
+  "date": "2026-08-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 23,
+   "quote": "the module changes the math"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src050_04",
+  "text": "DECISION (Wanda, Grace signed off, 8/20): final Cedar Point offer at +6% ($0.89/claim), 2-year term, vaccine module included, floor +4% — rationale on file from the 8/8 sync.",
+  "speaker": "p_wanda_liu",
+  "source_id": "src050",
+  "date": "2026-08-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "**DECISION, for the record:**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src050_05",
+  "text": "Offer sent 8/20 16:30 with the quality one-pager and module datasheet; physicians meet the first week of September, answer expected by Sep 5, admin's verbal read positive.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src050",
+  "date": "2026-08-20",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "answer expected by **Sep 5**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src051_01",
+  "text": "Competitive read on file: the $0.71 quote is almost certainly an intro rate — below sustainable fully-loaded cost on a pediatric mix, and the competitor's migration story glosses over payer re-enrollment.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src051",
+  "date": "2026-08-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "almost certainly an intro rate"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src051_02",
+  "text": "Latest Cedar Point state: final offer delivered 8/20 16:30 (+6%, 2yr, module included); response expected by Sep 5; exactly 2 points of negotiating room remain (floor +4%), no second module giveaway.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src051",
+  "date": "2026-08-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "Final offer delivered 16:30"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src051_03",
+  "text": "The 8/18 module demo is logged as the turn in the negotiation.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src051",
+  "date": "2026-08-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "This was the turn in the negotiation."
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src051_04",
+  "text": "Playbook lesson logged: the +12% opener was too aggressive for the cleanest account in the book — noted for next cycle.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src051",
+  "date": "2026-08-21",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "too aggressive an opener for our cleanest account"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src052_01",
+  "text": "Whitfield's method: a stratified 240-encounter sample of established-patient E/M claims across Clarion's four highest-E/M-volume clients, scored against specialty benchmarks with documentation excerpts.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 18,
+   "quote": "240 established-patient office visits across your four highest-E/M-volume clients"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_02",
+  "text": "(Independent expert finding) Harbor bills 99214 on 68% of sampled established visits vs a ~44% family-medicine benchmark — a 24-point level-4 overweight with correspondingly thin 99213 volume.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "on 68% of the sampled encounters"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_03",
+  "text": "That distribution shape is exactly what payer audit-targeting algorithms select for — a loud screen, though a screen rather than a verdict.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "exactly the distribution shape that payer audit-targeting algorithms select for"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_04",
+  "text": "Recommendation: a 60-encounter documentation audit of Harbor's level-4 visits before Q4, MDM-scored under the 2021 E/M framework (time as the alternative path).",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "a 60-encounter documentation audit of Harbor's level-four visits"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_05",
+  "text": "Do not blanket-downcode: systematic downcoding without documentation review is itself a compliance red flag and forfeits legitimate revenue — fix the records, not the ratio.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "Do not blanket-downcode"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_06",
+  "text": "The other three sampled clients are unremarkable; Cedar Point Pediatrics is textbook — its pediatric E/M curve matches the specialty benchmark within noise.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 32,
+   "quote": "in particular is textbook"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src052_07",
+  "text": "Independence on the record: Whitfield ran the sample and wrote his findings before reading Clarion's internal notes — 'your instruments agree' with Priya's May flag.",
+  "speaker": "p_sam_whitfield",
+  "source_id": "src052",
+  "date": "2026-08-12",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 18,
+   "quote": "I ran the sample and wrote my findings before reading your internal notes"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src053_01",
+  "text": "Elena's gut-check to the channel before opening the audit ticket: does anyone see a reason the 68% figure could be a sampling artifact?",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src053",
+  "date": "2026-08-13",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "could be an artifact?"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src053_02",
+  "text": "Sofia's full-population check: Harbor's YTD billed-code distribution for established visits is 67.8% at 99214 — Whitfield's sample matches the population within rounding; not a sampling artifact.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src053",
+  "date": "2026-08-13",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "67.8% at 99214"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src053_03",
+  "text": "Three independent looks (Priya's May read, Sofia's population number, Whitfield's stratified sample) land on the same answer — the distribution question is settled; the audit answers the documentation question. Nobody blanket-downcodes.",
+  "speaker": "p_priya_nair",
+  "source_id": "src053",
+  "date": "2026-08-13",
+  "stance": "audit_risk_high",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "three independent looks now"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src053_04",
+  "text": "Comms rule set for the audit: Amy hears about it from Dana as proactive quality work before any chart access — no client learns about a compliance review from a records request.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src053",
+  "date": "2026-08-13",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 28,
+   "quote": "no client learns about a compliance review from a records request"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src054_01",
+  "text": "TK-1135 scope: 60 Harbor established-patient 99214 encounters audited against the 2021 E/M guidelines, MDM-first scoring, stratified by provider and month, due 2026-09-15, Whitfield co-reviewing — no blanket downcoding under any finding.",
+  "speaker": "p_elena_vasquez",
+  "source_id": "src054",
+  "date": "2026-08-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "No blanket downcoding under any finding"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src054_02",
+  "text": "Sample locked 8/21: 60 encounters stratified across all 6 Harbor physicians and Feb–Jul months (10/month), methodology memo with Whitfield for sign-off before scoring.",
+  "speaker": "p_sofia_chen",
+  "source_id": "src054",
+  "date": "2026-08-14",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 27,
+   "quote": "stratified across all 6 Harbor physicians"
+  },
+  "topics": [
+   "top_em_coding"
+  ]
+ },
+ {
+  "id": "clm_src055_01",
+  "text": "BrightPath pilot through 8/12 (12 days live): 312 claims submitted via the FHIR API, 97.1% auto-adjudicated (9 review-routed, all payer-side pend reasons, no connector faults).",
+  "speaker": "p_jake_osei",
+  "source_id": "src055",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "**97.1% auto-adjudicated**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src055_02",
+  "text": "Median BrightPath claim-status latency ~4 seconds vs the ~11-day paper/clearinghouse baseline for regionals; zero submission failures and zero API contract changes since go-live.",
+  "speaker": "p_jake_osei",
+  "source_id": "src055",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 20,
+   "quote": "Median claim-status latency: ~4 seconds"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src055_03",
+  "text": "Both pilot metrics beat the kickoff success thresholds (auto-adjudication ≥90%, status latency ≤60s); the 90-day review ~November 1 remains the widen/hold decision gate.",
+  "speaker": "p_jake_osei",
+  "source_id": "src055",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "90-day pilot review lands ~**November 1**"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src056_01",
+  "text": "Nina hit a new Harbor retro-eligibility case with Priya OOO until Aug 21 — both TK-1063 and Copilot say 'ask Priya before submitting,' leaving her without a documented path.",
+  "speaker": "p_nina_park",
+  "source_id": "src056",
+  "date": "2026-08-12",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "what's the move? :grimacing:"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src056_02",
+  "text": "Tom's honest backup inventory: one supervised case ever; remembers new-claim-not-adjustment and the 90-day determination-date clock, but can't do the EVS span reading alone and has never used the July delay-code-9 + letter requirement.",
+  "speaker": "p_tom_reyes",
+  "source_id": "src056",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 16,
+   "quote": "i did ONE of these, supervised"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src056_03",
+  "text": "Dana's call: with the determination date 8/3 the 90-day window runs to early November, so the case waits nine days for Priya's return — a wrong retro claim burns weeks, waiting costs nine days off ninety.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src056",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "**this waits for Priya.**"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src056_04",
+  "text": "The bus factor named in-channel: a nine-day process stall because one person is out — third 'wait for Priya' this year — is a failure to document her, not a knock on her; write-it-down session demanded for her return.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src056",
+  "date": "2026-08-12",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 31,
+   "quote": "never documenting her"
+  },
+  "topics": [
+   "top_retro_elig"
+  ]
+ },
+ {
+  "id": "clm_src057_01",
+  "text": "Clarion moves up to the 4th floor of the current building on October 1 — same address, double the space, sit-stand desks, new garage passes with 6 EV chargers, plants migrating with a facilities plan.",
+  "speaker": "p_grace_kim",
+  "source_id": "src057",
+  "date": "2026-08-19",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "4th floor of our current building on October 1st"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src058_01",
+  "text": "CRM 8/15 — the save: Karen called with a verbal commitment to a 1-year renewal extension, paperwork through her September physician-owner meeting; both of her 7/30 save conditions were met.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src058",
+  "date": "2026-08-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "Verbal commitment to a **1-year renewal extension**"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src058_02",
+  "text": "TK-1088 paid 8/14: $36,912 on the remit (billed $38,450), 114 days DOS-to-payment; Karen called within the hour, four days before the surgeon's Monday question.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src058",
+  "date": "2026-08-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "$36,912 on today's remit (billed $38,450"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src058_03",
+  "text": "One overdue item remains on Clarion's side at the save: Sofia's monthly quality report, first issue due Aug 25 — logged so nobody gets complacent.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src058",
+  "date": "2026-08-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "one overdue item remains on our side"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src058_04",
+  "text": "Digest streak at 7 consecutive Mondays by 8/10; Karen forwards the digests to the surgeon directly.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src058",
+  "date": "2026-08-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 21,
+   "quote": "7 consecutive Mondays"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src058_05",
+  "text": "Karen's renewal framing on the 8/15 call: claim paid, July/August clean, and the digest means she always has an answer before the surgeon asks — 'that's the vendor I thought I was buying.'",
+  "speaker": "p_karen_doyle",
+  "source_id": "src058",
+  "date": "2026-08-15",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "that's the vendor I thought I was buying"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ },
+ {
+  "id": "clm_src059_01",
+  "text": "CRM 7/25: the Aetna outage recovery ate the rest of July's integration time on top of BrightPath — the Northside eligibility batch API is firmly a September delivery now.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src059",
+  "date": "2026-07-25",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "the eligibility batch API is firmly a September delivery now"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src059_02",
+  "text": "Commitment #3 done: XS training delivered by Priya to 6 Northside billers on 7/22, well received (pair table requested as a desk card).",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src059",
+  "date": "2026-07-25",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 19,
+   "quote": "XS training delivered by Priya to 6 Northside billers"
+  },
+  "topics": [
+   "top_modifier59"
+  ]
+ },
+ {
+  "id": "clm_src059_03",
+  "text": "Luis's read on the commitments: 'your training was on time, your dashboard was early, and your API is late — one out of three of you owes me.' Patient but counting; will raise it at the Sep 3 check-in without a date.",
+  "speaker": "p_luis_romero",
+  "source_id": "src059",
+  "date": "2026-07-25",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 17,
+   "quote": "one out of three of you owes me"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src059_04",
+  "text": "The four Northside commitments of record (6/17): dashboard by 7/15 (Dana), eligibility batch API by 8/1 (Marcus), XS training by end of July (Priya), monthly check-ins from 9/3 (Dana).",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src059",
+  "date": "2026-07-25",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 25,
+   "quote": "Four commitments recorded"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src060_01",
+  "text": "Dana asked Copilot for a no-spin one-page Lakeview recap for Karen's September owner meeting.",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src060",
+  "date": "2026-08-24",
+  "stance": "question",
+  "status": "current",
+  "anchor": {
+   "line": 13,
+   "quote": "the year in facts, no spin"
+  },
+  "topics": []
+ },
+ {
+  "id": "clm_src060_02",
+  "text": "Latest Lakeview state per the 8/24 recap: verbal 1-year extension pending the September owner meeting, all save conditions met, denial rate holding under 6% through August, one open Clarion-side item (the overdue monthly quality report, arriving with September's digest).",
+  "speaker": "p_dana_ortiz",
+  "source_id": "src060",
+  "date": "2026-08-24",
+  "stance": "assert",
+  "status": "current",
+  "anchor": {
+   "line": 24,
+   "quote": "holding under 6% through August"
+  },
+  "topics": [
+   "top_pricing_renewals"
+  ]
+ }
+]
