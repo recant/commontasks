@@ -2,9 +2,9 @@
 """Hosted Liquid AI agent for the CommonTasks demo.
 
 The procedural-memory corpus stays in local SQLite. For the public demo, model
-inference is provided by Liquid AI's small model through OpenRouter. Only the
-retrieved procedure/reference/example records needed for a request are sent to
-the model, not the entire corpus.
+inference prefers Liquid AI's small model through OpenRouter. If Liquid is
+unavailable or rate-limited, OpenRouter automatically falls back to its free
+model router while preserving tool-calling requirements.
 """
 
 from __future__ import annotations
@@ -25,6 +25,7 @@ MODEL_API_KEY = os.environ.get("OPENROUTER_API_KEY") or os.environ.get(
     "COMMONTASKS_API_KEY", ""
 )
 MODEL = os.environ.get("COMMONTASKS_MODEL", "liquid/lfm-2.5-2.6b:free")
+FALLBACK_MODEL = os.environ.get("COMMONTASKS_FALLBACK_MODEL", "openrouter/free")
 
 SYSTEM_PROMPT = """You are CommonTasks, a small language model that performs recurring organizational tasks by reading a procedural-memory corpus at inference time.
 
@@ -46,15 +47,19 @@ Answer naturally. Do not explain the retrieval machinery unless the employee ask
 
 
 def hosted_chat(messages: list[dict[str, Any]]) -> dict[str, Any]:
-    """Call Liquid through OpenRouter's OpenAI-compatible chat API."""
+    """Call OpenRouter, preferring Liquid and falling back to another free tool-capable model."""
     if not MODEL_API_KEY:
         raise RuntimeError(
             "Missing API key. Set OPENROUTER_API_KEY before starting CommonTasks."
         )
 
+    models = [MODEL]
+    if FALLBACK_MODEL and FALLBACK_MODEL != MODEL:
+        models.append(FALLBACK_MODEL)
+
     payload = json.dumps(
         {
-            "model": MODEL,
+            "models": models,
             "messages": messages,
             "tools": TOOL_SCHEMAS,
             "tool_choice": "auto",
@@ -79,13 +84,17 @@ def hosted_chat(messages: list[dict[str, Any]]) -> dict[str, Any]:
             return json.load(response)
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", errors="replace")[:2000]
+        if exc.code == 429:
+            raise RuntimeError(
+                "All configured free model routes are temporarily busy. Please retry shortly."
+            ) from exc
         raise RuntimeError(f"OpenRouter returned HTTP {exc.code}: {body}") from exc
     except urllib.error.URLError as exc:
         raise RuntimeError(f"Could not reach OpenRouter: {exc}") from exc
 
 
 def run_agent(user_prompt: str, max_steps: int = 8, verbose: bool = True) -> str:
-    """Run the procedural-memory retrieval loop using hosted Liquid inference."""
+    """Run the procedural-memory retrieval loop using hosted inference."""
     messages: list[dict[str, Any]] = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_prompt},
@@ -96,6 +105,11 @@ def run_agent(user_prompt: str, max_steps: int = 8, verbose: bool = True) -> str
         choices = response.get("choices") or []
         if not choices:
             raise RuntimeError(f"OpenRouter returned no choices: {response}")
+
+        if verbose:
+            served_model = response.get("model")
+            if served_model:
+                print(f"[model {step + 1}] {served_model}")
 
         raw_message = choices[0].get("message") or {}
         tool_calls = raw_message.get("tool_calls") or []
@@ -144,7 +158,7 @@ def run_agent(user_prompt: str, max_steps: int = 8, verbose: bool = True) -> str
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="CommonTasks procedural-memory demo with Liquid via OpenRouter"
+        description="CommonTasks procedural-memory demo with Liquid + free fallback via OpenRouter"
     )
     parser.add_argument("prompt", nargs="*", help="Task plus the current case details")
     parser.add_argument("--seed", type=int, default=50_000)
@@ -158,7 +172,8 @@ def main() -> int:
         f"Ready: {info['corpus_rows']:,} procedural-memory records across "
         f"{info['tasks']} tasks in {info['database']}"
     )
-    print(f"Hosted model: {MODEL} via OpenRouter")
+    print(f"Preferred model: {MODEL} via OpenRouter")
+    print(f"Fallback model: {FALLBACK_MODEL}")
 
     if args.list_tasks:
         print(json.dumps(list_tasks(), indent=2, ensure_ascii=False))
