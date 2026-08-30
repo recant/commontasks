@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser UI for the CommonTasks procedural-memory demo."""
+"""Browser UI for the Secret Agent procedural-memory demo."""
 
 from __future__ import annotations
 
@@ -11,6 +11,8 @@ from typing import Any
 
 from demo import list_tasks, seed_database
 from liquid_agent import MODEL, run_agent
+
+PRODUCT_NAME = "Secret Agent"
 
 # Bind on all interfaces so the same entrypoint works locally and on hosted
 # platforms such as Render/Railway. Those platforms conventionally inject PORT.
@@ -54,17 +56,34 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _index(self) -> None:
+        """Serve the existing frontend with Secret Agent product branding."""
+        html = (WEB_ROOT / "index.html").read_text(encoding="utf-8")
+        html = html.replace("CommonTasks", PRODUCT_NAME)
+        html = html.replace('<div class="mark">C</div>', '<div class="mark">S</div>')
+        html = html.replace('<div class="wmark">C</div>', '<div class="wmark">S</div>')
+        html = html.replace('<div class="aavatar">C</div>', '<div class="aavatar">S</div>')
+        body = html.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self) -> None:
         if self.path == "/api/health":
             self._json(200, {
                 "ok": True,
+                "product": PRODUCT_NAME,
                 "model": MODEL,
                 "inference": "OpenRouter",
                 "tasks": len(list_tasks()["tasks"]),
             })
             return
-        if self.path == "/":
-            self.path = "/index.html"
+        if self.path in {"/", "/index.html"}:
+            self._index()
+            return
         super().do_GET()
 
     def do_POST(self) -> None:
@@ -96,7 +115,7 @@ class Handler(SimpleHTTPRequestHandler):
 def main() -> None:
     info = seed_database(50_000)
     print(
-        f"Ready: {info['corpus_rows']:,} procedural-memory records across "
+        f"{PRODUCT_NAME} ready: {info['corpus_rows']:,} procedural-memory records across "
         f"{info['tasks']} tasks in {info['database']}"
     )
     print(f"Hosted model: {MODEL} via OpenRouter")
