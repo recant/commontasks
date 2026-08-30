@@ -1919,12 +1919,18 @@ export interface HybridSearchMeta {
   };
   /**
    * v0.32.3 (search-lite mode): the active search mode for this call.
-   * 'conservative' | 'balanced' | 'tokenmax'. Resolved from
-   * config.search.mode with per-call + per-key overrides applied. Surfaced
-   * so observability sees what mode actually ran (which can differ from
-   * the operator's `config.search.mode` setting if per-call overrides win).
+   * Resolved from config.search.mode with per-call + per-key overrides
+   * applied. Surfaced so observability sees what mode actually ran (which can
+   * differ from the operator's `config.search.mode` setting if per-call
+   * overrides win).
+   *
+   * MUST mirror `SearchMode` in search/mode.ts, which is the source of truth.
+   * Re-spelled inline rather than imported because this module is a deliberate
+   * zero-import leaf (search/mode.ts imports CRMode from here, so a value
+   * import would cycle). Adding a mode there means adding it here — the
+   * compiler catches the omission at the hybrid.ts assignment sites.
    */
-  mode?: 'conservative' | 'balanced' | 'tokenmax';
+  mode?: 'conservative' | 'balanced' | 'tokenmax' | 'slm';
   /**
    * v0.36 (D16 / CDX-10): the embedding column that actually ran this
    * search. Threaded through to eval_candidates capture so replay can

@@ -126,6 +126,25 @@ describe('sanitizeExpansionOutput (M2 output sanitization)', () => {
     expect(out.length).toBe(2);
   });
 
+  it('widens the cap to 4 under the local/SLM profile', () => {
+    // A small model's paraphrases cluster tightly, so each variant recovers
+    // fewer synonym misses; the profile buys recall back with more variants.
+    // The default (cloud) path above must stay at 2 — that assertion is the
+    // guard that this widening is opt-in, not a global behavior change.
+    const saved = process.env.GBRAIN_LOCAL_ONLY;
+    process.env.GBRAIN_LOCAL_ONLY = '1';
+    try {
+      expect(sanitizeExpansionOutput(['a', 'b', 'c', 'd', 'e']).length).toBe(4);
+    } finally {
+      if (saved === undefined) delete process.env.GBRAIN_LOCAL_ONLY;
+      else process.env.GBRAIN_LOCAL_ONLY = saved;
+    }
+  });
+
+  it('still honors an explicitly passed cap regardless of profile', () => {
+    expect(sanitizeExpansionOutput(['a', 'b', 'c', 'd', 'e'], 3).length).toBe(3);
+  });
+
   it('rejects non-string items', () => {
     const out = sanitizeExpansionOutput([null, 42, { evil: true }, 'real' as unknown]);
     expect(out).toEqual(['real']);

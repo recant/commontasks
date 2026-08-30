@@ -24,7 +24,7 @@
 import { writeFileSync, mkdirSync, appendFileSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import type { BrainEngine } from '../core/engine.ts';
-import { SEARCH_MODES, type SearchMode } from '../core/search/mode.ts';
+import { SEARCH_MODES, isSearchMode, type SearchMode } from '../core/search/mode.ts';
 
 export interface RunAllOpts {
   help: boolean;
@@ -68,7 +68,7 @@ export function parseRunAllArgs(args: string[]): RunAllOpts {
       const list = (args[++i] ?? '').split(',').map(s => s.trim()).filter(Boolean);
       const validated: SearchMode[] = [];
       for (const m of list) {
-        if (m === 'conservative' || m === 'balanced' || m === 'tokenmax') {
+        if (isSearchMode(m)) {
           validated.push(m);
         } else {
           throw new Error(`--modes: ${m} is not a valid mode (use conservative|balanced|tokenmax)`);

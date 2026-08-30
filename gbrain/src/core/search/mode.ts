@@ -30,7 +30,7 @@ import { getRecipe } from '../ai/recipes/index.ts';
 // #3657 seam: the sunsetting legacy reranker default has ONE code home
 // (ai/defaults.ts — a leaf module, no SDK loads). The three bundles below
 // resolve through it so the September default swap is a one-line change.
-import { LEGACY_DEFAULT_RERANKER_MODEL } from '../ai/defaults.ts';
+import { LEGACY_DEFAULT_RERANKER_MODEL, DEFAULT_LOCAL_RERANKER_MODEL } from '../ai/defaults.ts';
 
 /**
  * Look up the `reranker.default_timeout_ms` declared by the resolved
@@ -57,12 +57,13 @@ function lookupRerankerRecipeDefaultTimeout(modelStr: string | undefined): numbe
   return recipe?.touchpoints?.reranker?.default_timeout_ms;
 }
 
-export type SearchMode = 'conservative' | 'balanced' | 'tokenmax';
+export type SearchMode = 'conservative' | 'balanced' | 'tokenmax' | 'slm';
 
 export const SEARCH_MODES: ReadonlyArray<SearchMode> = Object.freeze([
   'conservative',
   'balanced',
   'tokenmax',
+  'slm',
 ]);
 
 /**
@@ -491,6 +492,85 @@ export const MODE_BUNDLES: Readonly<Record<SearchMode, Readonly<ModeBundle>>> = 
     // v0.42.3.0 — autocut ON.
     autocut: true,
     // v0.43 — relational recall ON for tokenmax (max-recall tier).
+    relationalRetrieval: true,
+    relational_retrieval_depth: 2,
+    autocut_jump: 0.2,
+    autocut_min_top: 0.35,
+    autocut_min_keep: 1,
+  }),
+  /**
+   * v0.47.6.0-slm — the local small-model tier.
+   *
+   * NOT a cheaper `conservative`. The two bundles cut different things, because
+   * they are sized against different bottlenecks: `conservative` exists to
+   * spend less money on a capable model, so it trims BOTH the LLM-billed knobs
+   * and the free ones to shave latency. Here the bottleneck is the generator's
+   * reasoning, not the bill — local inference bills nothing — so this bundle
+   * keeps conservative's LLM-spend posture while taking balanced's ZERO-LLM
+   * posture in full:
+   *
+   *   graph_signals, relationalRetrieval, contextual_retrieval:'title'
+   *
+   * are pure SQL and string concat. They cost no tokens and no API calls, and
+   * the graph arm is gbrain's largest measured retrieval win. Disabling them to
+   * save milliseconds while asking a 4B model to compensate with reasoning it
+   * does not have is exactly the wrong trade. A weak generator needs BETTER
+   * retrieval, not less of it.
+   *
+   * The rest follows from a small context window and shallow reasoning:
+   *   - tokenBudget 3000 / searchLimit 6 — fits a 4-8k window with room for the
+   *     system prompt, and an SLM reasons worse over a sprawling candidate set
+   *     than over a few well-ranked ones.
+   *   - reranker ON, but LOCAL (see DEFAULT_LOCAL_RERANKER_MODEL — a hosted
+   *     reranker would ship the brain's documents off-machine every search).
+   *     top_n_in 24 > searchLimit 6 deliberately: scoring a wider pool than we
+   *     return is what lets the cross-encoder promote a good chunk from rank 20
+   *     into the returned six. The D4 invariant (no unscored tail) needs
+   *     top_n_in >= searchLimit, not equality, since rerank precedes the slice.
+   *   - autocut ON — legitimate here ONLY because the reranker fires.
+   *     `conservative` disables it for the honest reason that without a
+   *     cross-encoder there is no trustworthy cliff signal. If the operator
+   *     never launches llama-server, rerank fails open and applyAutocut no-ops
+   *     on <2 finite scores, so this degrades to plain RRF rather than cutting
+   *     on a meaningless curve.
+   *   - expansion ON — a small model's paraphrases cluster tightly around the
+   *     original, so expansion recovers fewer synonym misses per variant than a
+   *     Haiku-class model would; expansion.ts widens the variant count to
+   *     compensate. This is the one knob here that costs a local LLM call, and
+   *     so the first one to turn off if query latency dominates.
+   *
+   * `reranker_timeout_ms` stays 5000 to match the other bundles: the
+   * llama-server-reranker recipe declares default_timeout_ms 30_000, which
+   * resolveSearchMode() already slots ABOVE the bundle, covering CPU warmup.
+   */
+  slm: Object.freeze({
+    cache_enabled: true,
+    cache_similarity_threshold: 0.92,
+    cache_ttl_seconds: 3600,
+    intentWeighting: true,
+    keywordOrFallback: true,
+    tokenBudget: 3000,
+    expansion: true,
+    searchLimit: 6,
+    reranker_enabled: true,
+    reranker_model: DEFAULT_LOCAL_RERANKER_MODEL,
+    reranker_top_n_in: 24,
+    reranker_top_n_out: null,
+    reranker_timeout_ms: 5000,
+    floor_ratio: undefined,
+    title_boost: 1.25,
+    evidence_cosine_floor: 0.8,
+    cross_modal_both_text_weight: 0.6,
+    cross_modal_both_image_weight: 0.4,
+    image_query_text_refinement_weight: 0.4,
+    image_query_image_refinement_weight: 0.6,
+    unified_multimodal: false,
+    unified_multimodal_only: false,
+    cross_modal_llm_intent: false,
+    graph_signals: true,
+    contextual_retrieval: 'title' as CRMode,
+    contextual_retrieval_disabled: false,
+    autocut: true,
     relationalRetrieval: true,
     relational_retrieval_depth: 2,
     autocut_jump: 0.2,

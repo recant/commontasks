@@ -25,16 +25,51 @@ import { MODE_BUNDLES } from '../src/core/search/mode.ts';
 import {
   LEGACY_DEFAULT_RERANKER_MODEL,
   NEW_INSTALL_DEFAULT_RERANKER_MODEL,
+  DEFAULT_LOCAL_RERANKER_MODEL,
   RERANKER_SUNSETS,
   ZEROENTROPY_SUNSET_DATE,
   rerankerSunset,
 } from '../src/core/ai/defaults.ts';
 
 describe('LEGACY_DEFAULT_RERANKER_MODEL seam (#3657)', () => {
-  test('all three mode bundles resolve their reranker_model through the one constant', () => {
+  test('the three hosted mode bundles resolve their reranker_model through the one constant', () => {
     expect(MODE_BUNDLES.conservative.reranker_model).toBe(LEGACY_DEFAULT_RERANKER_MODEL);
     expect(MODE_BUNDLES.balanced.reranker_model).toBe(LEGACY_DEFAULT_RERANKER_MODEL);
     expect(MODE_BUNDLES.tokenmax.reranker_model).toBe(LEGACY_DEFAULT_RERANKER_MODEL);
+  });
+
+  test('the slm bundle resolves through the LOCAL constant, never a hosted default', () => {
+    // A reranker receives the query AND the candidate document texts, so a
+    // hosted default would ship brain content off-machine on every search —
+    // disqualifying for the local profile. This is a privacy invariant, not a
+    // preference: assert both that it uses the local constant and that it is
+    // not any hosted one.
+    expect(MODE_BUNDLES.slm.reranker_model).toBe(DEFAULT_LOCAL_RERANKER_MODEL);
+    expect(MODE_BUNDLES.slm.reranker_model).not.toBe(LEGACY_DEFAULT_RERANKER_MODEL);
+    expect(MODE_BUNDLES.slm.reranker_model).not.toBe(NEW_INSTALL_DEFAULT_RERANKER_MODEL);
+    expect(MODE_BUNDLES.slm.reranker_model.startsWith('llama-server-reranker:')).toBe(true);
+  });
+
+  test('the slm bundle keeps autocut legitimate by actually enabling the reranker', () => {
+    // autocut cuts on the cross-encoder cliff. Enabling it without a reranker
+    // is what `conservative` correctly refuses to do. If a future edit turns
+    // the reranker off here, autocut must go with it.
+    expect(MODE_BUNDLES.slm.autocut).toBe(true);
+    expect(MODE_BUNDLES.slm.reranker_enabled).toBe(true);
+    // top_n_in must cover the returned slice (the D4 no-unscored-tail
+    // invariant), and exceeding it is what lets the cross-encoder promote a
+    // chunk from outside the top 6 into the returned set.
+    expect(MODE_BUNDLES.slm.reranker_top_n_in).toBeGreaterThanOrEqual(MODE_BUNDLES.slm.searchLimit);
+  });
+
+  test('the slm bundle keeps the zero-LLM retrieval arms ON', () => {
+    // The whole point of the bundle: graph signals, relational recall and
+    // title contextual retrieval cost no tokens and no API calls, and a weak
+    // generator needs MORE retrieval quality, not less. Trimming them to save
+    // latency (as `conservative` does) is the wrong trade here.
+    expect(MODE_BUNDLES.slm.graph_signals).toBe(true);
+    expect(MODE_BUNDLES.slm.relationalRetrieval).toBe(true);
+    expect(MODE_BUNDLES.slm.contextual_retrieval).toBe('title');
   });
 
   test('the constant still carries the pre-swap legacy value (this PR prepares, does NOT choose)', () => {

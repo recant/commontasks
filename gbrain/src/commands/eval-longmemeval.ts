@@ -61,7 +61,7 @@ interface ParsedArgs {
   topK: number;
   outputPath?: string;
   /** v0.32.3 — search-lite mode to evaluate under. Resolves through resolveSearchMode. */
-  mode?: 'conservative' | 'balanced' | 'tokenmax';
+  mode?: 'conservative' | 'balanced' | 'tokenmax' | 'slm';
   /**
    * v0.35.1.0 — path to a previous run's hypothesis JSONL. Question IDs
    * already present in the file are skipped on this run; the run resumes
@@ -125,7 +125,7 @@ function parseArgs(args: string[]): ParsedArgs {
     }
     if (a === '--mode') {
       const v = args[++i];
-      if (v === 'conservative' || v === 'balanced' || v === 'tokenmax') {
+      if (v === 'conservative' || v === 'balanced' || v === 'tokenmax' || v === 'slm') {
         out.mode = v;
       } else {
         throw new Error(`--mode must be one of conservative|balanced|tokenmax (got: ${v})`);

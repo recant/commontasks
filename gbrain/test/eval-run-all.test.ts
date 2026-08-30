@@ -13,6 +13,7 @@ import {
   persistRunRecord,
   type EvalRunRecord,
 } from '../src/commands/eval-run-all.ts';
+import { SEARCH_MODES } from '../src/core/search/mode.ts';
 
 let tmp: string;
 
@@ -27,7 +28,7 @@ afterAll(() => {
 describe('parseRunAllArgs', () => {
   test('defaults: all modes, longmemeval+replay suites, seed=42', () => {
     const opts = parseRunAllArgs([]);
-    expect(opts.modes).toEqual(['conservative', 'balanced', 'tokenmax']);
+    expect(opts.modes).toEqual([...SEARCH_MODES]);
     expect(opts.suites).toEqual(['longmemeval', 'replay']);
     expect(opts.seed).toBe(42);
     expect(opts.parallel).toBe(1);
@@ -59,7 +60,7 @@ describe('parseRunAllArgs', () => {
 
   test('--parallel clamps to mode count', () => {
     const opts = parseRunAllArgs(['--parallel', '10']);
-    expect(opts.parallel).toBe(3); // clamped to SEARCH_MODES.length
+    expect(opts.parallel).toBe(SEARCH_MODES.length); // clamped to mode count
   });
 
   test('--parallel rejects 0 / negative', () => {

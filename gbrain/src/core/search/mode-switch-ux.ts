@@ -166,6 +166,16 @@ function narrowness(mode: SearchMode): number {
       return 2;
     case 'tokenmax':
       return 3;
+    // This axis counts FEATURES, not payload size. `slm` runs the same feature
+    // set as balanced (reranker, graph signals, relational recall, autocut,
+    // title contextual retrieval) and adds expansion; it differs by returning
+    // a much smaller payload, which is not a dropped feature and must not
+    // trigger the "some features dropped" callout. Ranking it with balanced
+    // makes balanced↔slm silent, conservative→slm a widening, and
+    // tokenmax→slm a narrowing (it does drop per-chunk synopsis) — each
+    // correct.
+    case 'slm':
+      return 2;
   }
 }
 

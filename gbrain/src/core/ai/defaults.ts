@@ -73,6 +73,28 @@ export const NEW_INSTALL_DEFAULT_RERANKER_MODEL = 'voyage:rerank-2.5';
 export const LEGACY_DEFAULT_RERANKER_MODEL = 'zeroentropyai:zerank-2';
 
 /**
+ * Reranker default for the local/SLM profile (`search.mode = slm`).
+ *
+ * A reranker receives the query AND the candidate document texts. Every hosted
+ * reranker default above therefore ships the brain's content to a third party
+ * on every search — acceptable on a cloud-keyed install, disqualifying on one
+ * whose whole premise is that nothing leaves the machine. The `slm` bundle
+ * must not inherit a hosted default, so it resolves through this constant.
+ *
+ * 0.6B rather than the recipe's informational `qwen3-reranker-4b` placeholder:
+ * this profile already spends its RAM budget on a local 3-5B chat model, and
+ * a 4B cross-encoder alongside it roughly doubles the footprint. Cross-encoders
+ * stay strong at small sizes, which is what makes a local reranker the best
+ * accuracy-per-byte lever available to a weak generator.
+ *
+ * The model id after the colon is the `--alias` the operator passed to
+ * `llama-server --reranking`. If they used a different alias — or aren't
+ * running a reranker at all — `rerank.ts` fails open to RRF order and autocut
+ * no-ops, so search degrades rather than breaks.
+ */
+export const DEFAULT_LOCAL_RERANKER_MODEL = 'llama-server-reranker:qwen3-reranker-0.6b';
+
+/**
  * ZeroEntropy announced (2026-07-24) that its hosted API — including
  * /models/embed and /models/rerank — shuts down on this date. Query
  * embedding uses the same endpoint as ingestion, so a brain still on a

@@ -119,12 +119,43 @@ local few-billion-parameter model:
    job still ran, and the prompts plus every retrieved page still left the machine. Under
    `GBRAIN_LOCAL_ONLY` that fallback is now a hard error.
 
+### The `slm` search mode
+
+Retrieval is also retuned for a small generator. `gbrain config set search.mode slm`
+selects a fourth mode bundle sized against the SLM's real bottleneck:
+
+| Knob | `conservative` | `slm` | Why |
+|---|---|---|---|
+| `tokenBudget` | 4000 | **3000** | Fits a 4–8k window with room for the system prompt |
+| `searchLimit` | 10 | **6** | A small model reasons worse over a sprawling candidate set |
+| `graph_signals` | off | **on** | Zero-LLM. Free accuracy |
+| `relationalRetrieval` | off | **on** | Zero-LLM |
+| `contextual_retrieval` | none | **title** | Pure string concat. Free |
+| `reranker` | off | **on, local** | Qwen3-Reranker 0.6B via llama.cpp — no API, no egress |
+| `autocut` | off | **on** | Trustworthy only *because* the reranker fires |
+
+The non-obvious part: `slm` is **not** a cheaper `conservative`. Conservative
+exists to spend less money on a capable model, so it trims the free knobs too.
+Here the bottleneck is the model's reasoning and local inference bills nothing, so
+the zero-LLM retrieval arms all go back **on** — a weak generator needs better
+retrieval, not less of it.
+
+The reranker default is deliberately local: a reranker receives the query *and the
+candidate document texts*, so a hosted one would ship your knowledge base to a
+third party on every search. If you never launch llama-server, reranking fails
+open and autocut disables itself, so search degrades rather than breaks.
+
 ### Local-only configuration
 
 ```bash
 export GBRAIN_LOCAL_ONLY=1          # nothing leaves the machine; no silent cloud fallback
 export GBRAIN_LOCAL_MODEL=ollama:qwen3.5:4b   # optional, this is the default
 ollama pull qwen3.5:4b && ollama pull nomic-embed-text
+gbrain config set search.mode slm
+
+# Optional: the local reranker (biggest accuracy lever for a small model)
+llama-server --model qwen3-reranker-0.6b.gguf --alias qwen3-reranker-0.6b \
+  --reranking --port 8081
 ```
 
 All tiers deliberately resolve to the same local model: Ollama evicts and reloads weights when

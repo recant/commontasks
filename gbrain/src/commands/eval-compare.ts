@@ -18,7 +18,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { buildMetricGlossaryMeta } from '../core/eval/metric-glossary.ts';
-import { SEARCH_MODES, type SearchMode } from '../core/search/mode.ts';
+import { SEARCH_MODES, isSearchMode, type SearchMode } from '../core/search/mode.ts';
 
 export interface CompareOpts {
   help: boolean;
@@ -50,7 +50,7 @@ function parseCompareArgs(args: string[]): CompareOpts {
       const list = (args[++i] ?? '').split(',').map(s => s.trim()).filter(Boolean);
       const validated: SearchMode[] = [];
       for (const m of list) {
-        if (m === 'conservative' || m === 'balanced' || m === 'tokenmax') {
+        if (isSearchMode(m)) {
           validated.push(m);
         } else {
           throw new Error(`--modes: ${m} is not valid`);
@@ -135,7 +135,7 @@ function groupBySuiteAndMode(records: ParsedRecord[]): Record<string, Record<Sea
   const out: Record<string, Record<SearchMode, ParsedRecord | null>> = {};
   for (const r of records) {
     if (!out[r.suite]) {
-      out[r.suite] = { conservative: null, balanced: null, tokenmax: null };
+      out[r.suite] = { conservative: null, balanced: null, tokenmax: null, slm: null };
     }
     const existing = out[r.suite][r.mode];
     if (!existing || new Date(r.ran_at).getTime() > new Date(existing.ran_at).getTime()) {

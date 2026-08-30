@@ -114,6 +114,7 @@ export async function buildModesReport(engine: BrainEngine): Promise<SearchModes
       conservative: { ...MODE_BUNDLES.conservative },
       balanced: { ...MODE_BUNDLES.balanced },
       tokenmax: { ...MODE_BUNDLES.tokenmax },
+      slm: { ...MODE_BUNDLES.slm },
     },
     config_keys: SEARCH_MODE_CONFIG_KEYS,
   };

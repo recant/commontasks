@@ -685,7 +685,13 @@ export async function readGraphSignalsStats(engine: BrainEngine, days: number): 
   } else {
     const modeRaw = await engine.getConfig('search.mode').catch(() => null);
     const modeVal = typeof modeRaw === 'string' ? modeRaw.trim().toLowerCase() : '';
-    const mode = modeVal === 'conservative' || modeVal === 'tokenmax' ? modeVal : 'balanced';
+    // 'slm' is listed explicitly so it resolves on purpose rather than by
+    // falling through the 'balanced' catch-all. It happens to want the same
+    // answer (MODE_BUNDLES.slm.graph_signals is true), but relying on the
+    // fallback would silently lie the moment that bundle flips.
+    const mode = modeVal === 'conservative' || modeVal === 'tokenmax' || modeVal === 'slm'
+      ? modeVal
+      : 'balanced';
     enabled = mode !== 'conservative';
     source = 'mode_default';
   }

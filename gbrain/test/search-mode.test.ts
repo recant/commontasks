@@ -20,8 +20,11 @@ import {
 } from '../src/core/search/mode.ts';
 
 describe('SEARCH_MODES + MODE_BUNDLES canonical shape', () => {
-  test('SEARCH_MODES is exactly the 3 expected values', () => {
-    expect([...SEARCH_MODES]).toEqual(['conservative', 'balanced', 'tokenmax']);
+  test('SEARCH_MODES is exactly the 4 expected values', () => {
+    // Order is contractual — `gbrain eval compare` renders rows in this order,
+    // and `slm` is appended LAST so the three pre-existing modes keep their
+    // positions in every report and picker.
+    expect([...SEARCH_MODES]).toEqual(['conservative', 'balanced', 'tokenmax', 'slm']);
   });
 
   test('DEFAULT_SEARCH_MODE is balanced (matches v0.31.x current default surface)', () => {

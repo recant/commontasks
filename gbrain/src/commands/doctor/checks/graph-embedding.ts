@@ -51,7 +51,12 @@ export async function checkGraphSignalsCoverage(engine: BrainEngine): Promise<Ch
       // parity with isSearchMode + DEFAULT_SEARCH_MODE fallback).
       const modeRaw = await engine.getConfig('search.mode');
       const modeVal = typeof modeRaw === 'string' ? modeRaw.trim().toLowerCase() : '';
-      const mode = modeVal === 'conservative' || modeVal === 'tokenmax' ? modeVal : 'balanced';
+      // 'slm' listed explicitly rather than left to the 'balanced' catch-all:
+      // it wants the same answer today, but an accidental match would go
+      // stale silently if MODE_BUNDLES.slm.graph_signals ever flips.
+      const mode = modeVal === 'conservative' || modeVal === 'tokenmax' || modeVal === 'slm'
+        ? modeVal
+        : 'balanced';
       // Hardcoded knowledge of the mode bundle defaults — keeps the
       // doctor check from pulling in the full search/mode.ts surface.
       enabled = mode !== 'conservative';

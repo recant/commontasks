@@ -39,7 +39,7 @@ interface ReplayOpts {
   verbose?: boolean;
   topRegressions?: number;
   /** v0.32.3 — search-lite mode to replay under. */
-  mode?: 'conservative' | 'balanced' | 'tokenmax';
+  mode?: 'conservative' | 'balanced' | 'tokenmax' | 'slm';
   /** v0.32.3 [CDX-13] — force the per-call limit to a constant across modes. */
   compareLimit?: number;
 }
@@ -103,7 +103,7 @@ function parseArgs(args: string[]): ReplayOpts {
         break;
       case '--mode':
         if (!next) break;
-        if (next === 'conservative' || next === 'balanced' || next === 'tokenmax') {
+        if (next === 'conservative' || next === 'balanced' || next === 'tokenmax' || next === 'slm') {
           opts.mode = next;
         } else {
           throw new Error(`--mode must be one of conservative|balanced|tokenmax (got: ${next})`);
