@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Local browser UI for CommonTasks.
+"""Browser UI for CommonTasks.
 
 Run:
+    export GROQ_API_KEY="..."
     python3 webapp.py
 Then open:
     http://localhost:8000
 
-Everything stays local: browser -> Python server -> Ollama + SQLite.
+The browser and company database are local; model inference is hosted.
 """
 
 from __future__ import annotations
@@ -26,8 +27,8 @@ WEB_ROOT = ROOT / "web"
 
 
 def build_prompt(message: str, history: list[dict[str, Any]]) -> str:
-    """Turn the recent browser conversation into a compact prompt for the agent."""
-    recent = history[-8:]
+    """Give the hosted agent enough recent context to collect workflow details conversationally."""
+    recent = history[-10:]
     lines = []
     for item in recent:
         role = str(item.get("role", "user")).strip().lower()
@@ -37,8 +38,9 @@ def build_prompt(message: str, history: list[dict[str, Any]]) -> str:
 
     if lines:
         return (
-            "Continue this employee-support conversation. Use the local company database and tools "
-            "when useful.\n\nRecent conversation:\n"
+            "Continue this employee conversation. Use company-brain tools for company-specific facts and "
+            "workflow procedures. Employee-specific details must come from the conversation, never from guesses.\n\n"
+            "Recent conversation:\n"
             + "\n".join(lines)
             + f"\nUSER: {message}"
         )
@@ -60,7 +62,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/api/health":
-            self._json(200, {"ok": True, "model": MODEL})
+            self._json(200, {"ok": True, "model": MODEL, "inference": "hosted"})
             return
         if self.path == "/":
             self.path = "/index.html"
@@ -95,8 +97,8 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main() -> None:
     info = seed_database(50_000)
-    print(f"Ready: {info['knowledge_rows']:,} local knowledge records in {info['database']}")
-    print(f"Model: {MODEL}")
+    print(f"Ready: {info['knowledge_rows']:,} company-brain records in {info['database']}")
+    print(f"Hosted model: {MODEL}")
     print(f"Open http://localhost:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
 
