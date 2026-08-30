@@ -3,6 +3,7 @@ services:
     name: commontasks-demo
     runtime: python
     plan: free
+    buildCommand: python3 -m py_compile demo.py liquid_agent.py webapp.py
     startCommand: python3 webapp.py
     healthCheckPath: /api/health
     envVars:
