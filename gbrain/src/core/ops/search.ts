@@ -140,7 +140,7 @@ const search: Operation = {
     query: { type: 'string', required: true, description: "Search text. Exact tokens, names, and structured-field values work best here (e.g. 'acme-example series A'), since this op does no LLM expansion. This is the search text param — there is no `text` or `q` param." },
     limit: { type: 'number', description: 'Max results (default 20)' },
     offset: { type: 'number', description: 'Skip first N results (for pagination)' },
-    mode: { type: 'string', description: 'Search mode (conservative|balanced|tokenmax). Local callers only.' },
+    mode: { type: 'string', description: 'Search mode (conservative|balanced|tokenmax|slm). Local callers only.' },
     // #4398: per-call source scope, mirroring `query` — MCP clients passed it
     // here, got 'unknown parameter ignored', and read UNSCOPED results.
     source_id: {
@@ -291,7 +291,7 @@ const query: Operation = {
     snippet_chars: { type: 'number', description: SNIPPET_CHARS_PARAM_DESCRIPTION },
     expand: { type: 'boolean', description: 'Enable multi-query expansion (default: true)' },
     detail: { type: 'string', description: 'Result detail level: low (compiled truth only), medium (default, all with dedup), high (all chunks)' },
-    mode: { type: 'string', description: 'Search mode (conservative|balanced|tokenmax). Local callers only; remote uses configured mode.' },
+    mode: { type: 'string', description: 'Search mode (conservative|balanced|tokenmax|slm). Local callers only; remote uses configured mode.' },
     // v0.20.0 Cathedral II Layer 10 C1/C2: language + symbol-kind filters.
     lang: { type: 'string', description: 'Filter to chunks where content_chunks.language matches (e.g., typescript, python, ruby)' },
     symbol_kind: { type: 'string', description: 'Filter to chunks where content_chunks.symbol_type matches (e.g., function, class, method, type, interface)' },

@@ -106,7 +106,7 @@ function parseArgs(args: string[]): ReplayOpts {
         if (next === 'conservative' || next === 'balanced' || next === 'tokenmax' || next === 'slm') {
           opts.mode = next;
         } else {
-          throw new Error(`--mode must be one of conservative|balanced|tokenmax (got: ${next})`);
+          throw new Error(`--mode must be one of conservative|balanced|tokenmax|slm (got: ${next})`);
         }
         i++;
         break;

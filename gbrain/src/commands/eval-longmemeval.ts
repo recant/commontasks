@@ -128,7 +128,7 @@ function parseArgs(args: string[]): ParsedArgs {
       if (v === 'conservative' || v === 'balanced' || v === 'tokenmax' || v === 'slm') {
         out.mode = v;
       } else {
-        throw new Error(`--mode must be one of conservative|balanced|tokenmax (got: ${v})`);
+        throw new Error(`--mode must be one of conservative|balanced|tokenmax|slm (got: ${v})`);
       }
       continue;
     }
@@ -153,7 +153,7 @@ function printHelp(): void {
     `  --expansion               Enable multi-query expansion (off by default for benchmarks).\n` +
     `                            Costs one Haiku call per question; non-deterministic.\n` +
     `  --top-k K                 Retrieve K sessions per question (default: 8).\n` +
-    `  --mode M                  v0.32.3 — search-lite mode: conservative|balanced|tokenmax.\n` +
+    `  --mode M                  v0.32.3 — search-lite mode: conservative|balanced|tokenmax|slm.\n` +
     `                            Mode resolves through src/core/search/mode.ts so the search\n` +
     `                            behavior matches what production gets under that mode.\n` +
     `                            --mode tokenmax implies --expansion unless overridden.\n` +

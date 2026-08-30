@@ -238,7 +238,7 @@ export async function runModePicker(
     console.log('[AGENT] Before continuing, SHOW this matrix to your operator and');
     console.log(`[AGENT] ask which mode they want. The default above (${rec.mode}) was`);
     console.log('[AGENT] auto-selected from the Reason line. Run `gbrain config set');
-    console.log('[AGENT] search.mode <conservative|balanced|tokenmax>` if the operator');
+    console.log('[AGENT] search.mode <conservative|balanced|tokenmax|slm>` if the operator');
     console.log('[AGENT] picks differently. See INSTALL_FOR_AGENTS.md Step 3.5 for the');
     console.log('[AGENT] full protocol.');
     console.log('');

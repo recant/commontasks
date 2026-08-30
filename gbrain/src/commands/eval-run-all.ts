@@ -71,7 +71,7 @@ export function parseRunAllArgs(args: string[]): RunAllOpts {
         if (isSearchMode(m)) {
           validated.push(m);
         } else {
-          throw new Error(`--modes: ${m} is not a valid mode (use conservative|balanced|tokenmax)`);
+          throw new Error(`--modes: ${m} is not a valid mode (use conservative|balanced|tokenmax|slm)`);
         }
       }
       opts.modes = validated;

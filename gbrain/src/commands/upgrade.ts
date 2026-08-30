@@ -515,7 +515,7 @@ export async function runPostUpgrade(args: string[] = []): Promise<void> {
             console.log('');
             console.log('To pick:');
             console.log('  gbrain search modes              # see what is running');
-            console.log('  gbrain config set search.mode <conservative|balanced|tokenmax>');
+            console.log('  gbrain config set search.mode <conservative|balanced|tokenmax|slm>');
             console.log('  gbrain search tune               # data-driven recommendations');
             console.log('');
             console.log('tokenmax bumps limit to 50 (current default is 20). To preserve');
