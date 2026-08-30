@@ -1,97 +1,157 @@
 # CommonTasks
 
-A proof-of-concept for a **hosted small language model that answers recurring employee questions and performs common company workflows using a large private knowledge store**.
+CommonTasks is a proof-of-concept for a **small language model that becomes much more useful by reading an organization's procedural memory at inference time**.
 
-The model does not run on the employee laptop. By default the demo uses **Liquid AI's `LFM2.5-2.6B` through OpenRouter's free hosted endpoint** (`liquid/lfm-2.5-2.6b:free`). The synthetic company knowledge remains in local SQLite, and the model only receives the small records returned by explicit retrieval tools.
+The model is **not trained or fine-tuned on the organization**. Instead, when an employee asks it to do something, it retrieves the relevant internal procedure, reference rules, worked examples, and similar prior-agent cases from a local corpus and applies that material to the employee's new details.
 
-Liquid does not currently offer its own general hosted API, so OpenRouter is used as the hosted inference layer. The free endpoint costs $0 per prompt/completion token but is rate-limited and intended for prototypes/low-volume use.
+The intended deployment is **offline / intranet-only**. There is no OpenRouter, Claude, GPT, Groq, or public-internet fallback in the app. The default configuration expects an OpenAI-compatible model server reachable on the local machine or private network.
 
-The knowledge store is meant to stand in for information derived from a **GBrain-like company brain**: repeated Slack answers, handbooks, wikis, FAQs, policies, procedures, and past internal discussions.
-
-## What the demo is about
-
-Employees should be able to ask normal questions such as:
-
-- "How does PTO work?"
-- "Can I expense a monitor for working from home?"
-- "What should I do if I get a weird MFA prompt?"
-- "How do I onboard a vendor?"
-
-They can also ask CommonTasks to do recurring work:
-
-- "I need Figma access so I can edit product mockups for the launch."
-- "My laptop battery is failing and it dies in meetings. I need a replacement."
-- "Submit my reimbursement for the $47.20 cab from the airport."
-
-For workflows, CommonTasks retrieves the company procedure and then collects the employee-specific fields that procedure requires. It **must not invent missing details**. If a software-access workflow requires the application, business reason, and manager and the employee has only supplied the first two, CommonTasks asks for the manager before submitting anything.
-
-## Architecture
+## Core idea
 
 ```text
-browser / employee request
+employee gives a new case
         |
         v
-local Python web server
+small intranet SLM
         |
-        +------> local SQLite company brain (~50,000 synthetic records)
-        |             |
-        |             +-- FAQ / policy / workflow retrieval
+        +--> search_corpus("what task is this?")
+        |
+        +--> get_task_context(task)
+                  |
+                  +-- procedure
+                  +-- reference rules
+                  +-- worked example
+                  +-- similar prior cases
         |
         v
-OpenRouter hosted inference
+SLM applies that procedure to the NEW details
         |
         v
-Liquid AI LFM2.5-2.6B (free)
-        |
-        +-- search_knowledge()
-        +-- get_knowledge_record()
-        +-- submit_workflow()
-        +-- get_workflow_run()
+structured answer / analysis / draft
 ```
 
-The model never receives all 50,000 records. It searches, inspects the relevant record, and uses an allowlisted workflow tool when an action is appropriate.
+The SLM does not have to memorize every company process in its weights. The corpus supplies the organization-specific knowledge at inference time.
 
-## Company-brain data
+For example, the employee can say:
 
-On first run, `commontasks.db` is rebuilt with a `company-brain-v2` seed containing roughly 50,000 synthetic internal records.
+```text
+Analyze this incident: checkout is failing on about 35% of requests,
+it started 12 minutes ago, and we have no evidence of data loss.
+```
 
-High-signal records cover common topics such as:
+CommonTasks retrieves the internal incident-severity procedure and rubric, sees a worked example, and then applies that rubric to the new incident.
 
-- PTO and vacation
-- expenses and reimbursement
-- software/SaaS access
-- laptop replacement
-- business travel
-- benefits
-- payroll
-- password/MFA/security incidents
-- vendor onboarding
-- remote-work equipment
-- parental leave
-- office visitors
+Or:
 
-The rest of the corpus simulates repeated material that a GBrain-style ingestion system could have summarized from Slack, internal FAQs, handbooks, wikis, and team notes. It exists to exercise retrieval over a knowledge base substantially larger than the model should receive in-context.
+```text
+Analyze these notes as an intelligence report:
+Source A says the facility reopened Monday. Satellite reporting shows
+vehicle activity Tuesday. Source B says it remains closed but gives no date.
+```
 
-## Workflows
+The SLM retrieves the internal analysis procedure telling it how to separate claims, evidence, contradictions, source statements, inference, and information gaps. It then applies that procedure to the supplied report.
 
-The demo currently includes these synthetic workflows:
+## The corpus
 
-- `software_access`
-- `expense_reimbursement`
-- `laptop_replacement`
-- `travel_exception`
-- `vendor_onboarding`
+On first run, `commontasks.db` is seeded with **50,000 synthetic procedural-memory records** across **27 task families**.
 
-Each workflow has required fields enforced in Python, outside the model. `submit_workflow()` returns the exact missing fields rather than allowing the model to guess them. A deterministic expense rule also blocks reimbursements of $25 or more without a receipt.
+Each task has three high-signal records:
 
-Workflow submissions only write to the local synthetic `workflow_runs` table. They do not touch real company systems.
+1. **Procedure** — how the organization performs the task and what inputs are required.
+2. **Reference** — organization-specific rules, thresholds, rubrics, or constraints.
+3. **Worked example** — a representative employee input and a good prior-agent output.
 
-## Run it for free
+That produces 81 authoritative/high-signal records. The rest of the 50,000-row corpus consists of synthetic prior cases derived from things such as past assistant conversations, internal wikis, runbooks, resolved support threads, operations notes, and training examples.
 
-Create a free OpenRouter API key, then:
+Those prior cases are not treated as authoritative facts. They are patterns the SLM can use after it retrieves the governing procedure/reference.
+
+## Tasks currently represented
+
+The demo corpus contains these 27 task families:
+
+- `weekly_status_update` — turn rough work notes into the standard weekly update
+- `meeting_action_items` — extract decisions, owners, actions, and missing owners/deadlines
+- `customer_support_response` — draft a support reply using approved internal guidance
+- `bug_report_triage` — turn a vague bug report into engineering-ready triage
+- `incident_severity_triage` — apply the internal SEV rubric to a new incident
+- `security_mfa_triage` — follow the procedure for unexpected MFA prompts
+- `phishing_report_triage` — select the correct containment path from what the employee did
+- `software_access_review` — prepare an access request and identify required approvals
+- `expense_policy_check` — apply reimbursement rules to a specific expense
+- `vendor_onboarding_review` — prepare vendor intake and determine Legal/Security review paths
+- `travel_policy_check` — apply travel rules and flag exceptions before booking
+- `laptop_replacement_triage` — apply IT replacement/safety criteria to a device problem
+- `data_access_request_review` — apply least-privilege and data-sensitivity rules
+- `change_request_review` — check a production change for validation and rollback completeness
+- `deployment_readiness_check` — apply the release-readiness checklist
+- `postmortem_draft` — turn incident notes into a factual blameless postmortem draft
+- `project_status_risk_review` — extract milestone evidence, risks, dependencies, and decisions
+- `contract_intake_check` — check Legal intake completeness without giving legal advice
+- `procurement_comparison` — normalize vendor proposals using the internal comparison rubric
+- `new_hire_onboarding_plan` — build a role-aware onboarding checklist
+- `research_paper_triage` — extract question, design, result, limitations, and internal relevance
+- `lab_sample_qc` — apply a research sample QC checklist and retrieve assay-specific rules
+- `clinical_case_abstraction` — structure a patient case and retrieve protocol/checklist context for clinician review
+- `intelligence_report_summary` — separate claims, evidence, contradictions, inference, and gaps
+- `executive_brief` — turn long source material into a short decision-relevant brief
+- `regulatory_submission_check` — compare a filing package to the internal completeness checklist
+- `policy_question_answering` — answer ordinary employee policy questions from authoritative internal records
+
+The clinical task is deliberately limited to **chart abstraction and protocol lookup**. It does not diagnose, prescribe, or make final clinical decisions.
+
+## Why this is different from training
+
+No gradient updates happen. There is no per-employee fine-tune and no LoRA.
+
+Conceptually:
+
+```text
+base SLM
+  +
+retrieved organization procedure
+  +
+retrieved reference/rubric
+  +
+retrieved examples of how this task is normally handled
+  +
+new employee-provided case details
+  =
+answer
+```
+
+This means an organization can change a procedure by changing the corpus rather than retraining the model.
+
+## Retrieval tools
+
+The SLM gets four narrow tools:
+
+- `search_corpus(query)` — search the entire 50,000-record corpus
+- `get_corpus_record(record_id)` — read one complete result
+- `get_task_context(task_name)` — load the procedure, reference, worked example, and a few prior cases for a task
+- `list_tasks()` — inspect the task catalog
+
+The system prompt tells the SLM to search before doing substantive work and to request missing case-specific inputs rather than copying facts from an old example.
+
+## Offline / intranet inference
+
+By default CommonTasks expects an OpenAI-compatible inference server at:
+
+```text
+http://127.0.0.1:1234/v1/chat/completions
+```
+
+The default model identifier is:
+
+```text
+LiquidAI/LFM2-2.6B
+```
+
+Both values are configurable. Your local model server may expose the model under a different identifier.
 
 ```bash
-export OPENROUTER_API_KEY="your_key_here"
+export COMMONTASKS_API_URL="http://127.0.0.1:1234/v1/chat/completions"
+export COMMONTASKS_MODEL="LiquidAI/LFM2-2.6B"
+export COMMONTASKS_API_KEY="local"
 python3 webapp.py
 ```
 
@@ -101,69 +161,65 @@ Then open:
 http://localhost:8000
 ```
 
-The request path is:
+For an enterprise/air-gapped deployment, `COMMONTASKS_API_URL` can point to an inference server elsewhere on the private network instead of localhost.
+
+There is intentionally **no external-provider fallback**. If the intranet model server cannot be reached, CommonTasks errors rather than sending the request somewhere else.
+
+## Test the corpus without any model
+
+You can verify database construction and retrieval without starting an SLM:
+
+```bash
+python3 demo.py --db-only
+```
+
+List the 27 tasks:
+
+```bash
+python3 demo.py --list-tasks
+```
+
+Or inspect retrieval from Python/CLI while developing.
+
+## Example prompts
 
 ```text
-browser -> local Python server -> OpenRouter -> Liquid LFM2.5-2.6B
-                              -> local SQLite company brain
-                              -> local synthetic workflow runs
+Turn these messy meeting notes into decisions and action items: ...
 ```
-
-OpenRouter's free-model limits are lower than paid inference, so this is appropriate for a demo rather than a high-volume production deployment.
-
-## Command-line use
-
-Ask a normal company question with the same free Liquid model:
-
-```bash
-python3 liquid_agent.py "How many PTO days do I get?"
-```
-
-Start a workflow conversationally:
-
-```bash
-python3 liquid_agent.py "I need Figma access to edit launch mockups"
-```
-
-CommonTasks should retrieve the software-access procedure and ask for any required detail you did not provide rather than inventing it.
-
-### Test the database without any model API
-
-```bash
-python3 liquid_agent.py --db-only
-```
-
-This seeds the company brain, runs example searches, and deliberately attempts an incomplete software-access workflow so you can see the missing-field validation.
-
-## Configuration
-
-Defaults:
 
 ```text
-COMMONTASKS_MODEL=liquid/lfm-2.5-2.6b:free
-COMMONTASKS_API_URL=https://openrouter.ai/api/v1/chat/completions
-COMMONTASKS_DB=commontasks.db
+Review this production change: we are changing auth cache TTL from 5m to 30m...
 ```
 
-`OPENROUTER_API_KEY` is used by default. `COMMONTASKS_API_KEY`, `COMMONTASKS_MODEL`, and `COMMONTASKS_API_URL` can override the hosted provider/model without changing the app.
+```text
+Triage this bug: the dashboard goes blank after switching workspaces in Chrome...
+```
 
-## Privacy note
+```text
+Compare these two vendor proposals using our procurement rubric: ...
+```
 
-This repository uses **synthetic** company data. OpenRouter's free Liquid model listing states that prompts and outputs may be retained and used to train Liquid models. Do not use the free endpoint with confidential company Slack messages, documents, credentials, personal data, or other sensitive internal information.
+```text
+Triage this paper for our question of whether intervention X changes biomarker Y: ...
+```
 
-For a real CommonTasks deployment, use an inference provider with appropriate enterprise data-retention/privacy terms, or host the model in controlled cloud infrastructure. The architecture can stay the same: the private corpus remains external and only the minimum retrieved context is sent to the model.
+```text
+Structure this patient case for clinician review: age 67, fatigue, creatinine 1.1 to 1.9...
+```
 
-## Core design principle
+The important behavior is that the employee supplies **the current case facts**. The corpus supplies **how this organization handles that kind of case**.
 
-CommonTasks should not be a giant chatbot that memorizes the company. The useful primitive is:
+## Design principle
 
-- **reasoning:** a cheap hosted small model;
-- **company memory:** a much larger private external knowledge store;
-- **retrieval:** only the relevant company information enters model context;
-- **workflows:** reusable procedures discovered from company knowledge;
-- **inputs:** employee-specific details must come from the employee or connected systems, never model guesses;
-- **actions:** explicit allowlisted functions;
-- **policy:** deterministic checks outside the model;
-- **audit/state:** workflow runs are recorded separately from the language model.
+The goal is not to prove that a 2.6B model has the same general intelligence as a frontier model.
 
-A production version would replace the synthetic GBrain-like corpus with real permission-aware company data and replace the local workflow table with authenticated integrations into the systems employees already use.
+The goal is to test whether, inside a fixed organization, a smaller model can perform a much larger share of useful work when the difficult organization-specific knowledge has already been externalized as searchable procedural memory:
+
+```text
+general language/reasoning ability      -> SLM
+how our organization does this task     -> corpus
+similar good past behavior              -> worked examples / prior cases
+facts about this specific situation     -> employee input
+```
+
+That is the CommonTasks thesis.
