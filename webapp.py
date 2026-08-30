@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
-"""Browser UI for CommonTasks.
-
-Run:
-    export OPENROUTER_API_KEY="..."
-    python3 webapp.py
-Then open:
-    http://localhost:8000
-
-The browser and synthetic company database are local; model inference is hosted
-through OpenRouter using Liquid AI's free LFM2.5-2.6B endpoint by default.
-"""
+"""Browser UI for the offline/intranet CommonTasks demo."""
 
 from __future__ import annotations
 
@@ -19,7 +9,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from liquid_agent import MODEL, run_agent, seed_database
+from demo import MODEL, list_tasks, run_agent, seed_database
 
 HOST = os.environ.get("COMMONTASKS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("COMMONTASKS_PORT", "8000"))
@@ -28,24 +18,24 @@ WEB_ROOT = ROOT / "web"
 
 
 def build_prompt(message: str, history: list[dict[str, Any]]) -> str:
-    """Give the hosted agent enough recent context to collect workflow details conversationally."""
-    recent = history[-10:]
-    lines = []
+    """Include recent employee context while leaving task knowledge in the corpus."""
+    recent = history[-12:]
+    lines: list[str] = []
     for item in recent:
         role = str(item.get("role", "user")).strip().lower()
         content = str(item.get("content", "")).strip()
         if content:
             lines.append(f"{role.upper()}: {content}")
 
-    if lines:
-        return (
-            "Continue this employee conversation. Use company-brain tools for company-specific facts and "
-            "workflow procedures. Employee-specific details must come from the conversation, never from guesses.\n\n"
-            "Recent conversation:\n"
-            + "\n".join(lines)
-            + f"\nUSER: {message}"
-        )
-    return message
+    if not lines:
+        return message
+    return (
+        "Continue this employee conversation. Case-specific facts must come from this conversation. "
+        "Retrieve the relevant procedure/examples from the internal corpus before doing the task.\n\n"
+        "Recent conversation:\n"
+        + "\n".join(lines)
+        + f"\nUSER: {message}"
+    )
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -63,7 +53,12 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/api/health":
-            self._json(200, {"ok": True, "model": MODEL, "inference": "hosted"})
+            self._json(200, {
+                "ok": True,
+                "model": MODEL,
+                "inference": "local/intranet",
+                "tasks": len(list_tasks()["tasks"]),
+            })
             return
         if self.path == "/":
             self.path = "/index.html"
@@ -86,8 +81,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not isinstance(history, list):
                 raise ValueError("history must be a list")
 
-            prompt = build_prompt(message, history)
-            answer = run_agent(prompt, verbose=False)
+            answer = run_agent(build_prompt(message, history), verbose=False)
             self._json(200, {"answer": answer, "model": MODEL})
         except Exception as exc:
             self._json(500, {"error": str(exc)})
@@ -98,8 +92,11 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main() -> None:
     info = seed_database(50_000)
-    print(f"Ready: {info['knowledge_rows']:,} company-brain records in {info['database']}")
-    print(f"Hosted model: {MODEL}")
+    print(
+        f"Ready: {info['corpus_rows']:,} procedural-memory records across "
+        f"{info['tasks']} tasks in {info['database']}"
+    )
+    print(f"Intranet model: {MODEL}")
     print(f"Open http://localhost:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
 
