@@ -219,6 +219,42 @@ describe('resolveSearchMode resolution chain', () => {
     expect(r.tokenBudget).toBe(4000);
   });
 
+  test('slm resolves through the real chain, not just the bundle shape', () => {
+    const r = resolveSearchMode({ mode: 'slm' });
+    expect(r.resolved_mode).toBe('slm');
+    expect(r.mode_valid).toBe(true);
+    // Small-context posture.
+    expect(r.searchLimit).toBe(6);
+    expect(r.tokenBudget).toBe(3000);
+    // Zero-LLM arms stay ON — the point of the bundle. conservative turns all
+    // three OFF to save latency, which is the wrong trade for a weak generator.
+    expect(r.graph_signals).toBe(true);
+    expect(r.relationalRetrieval).toBe(true);
+    expect(r.contextual_retrieval).toBe('title');
+    // autocut is only sound because the reranker fires.
+    expect(r.reranker_enabled).toBe(true);
+    expect(r.autocut).toBe(true);
+  });
+
+  test('slm inherits the local reranker recipe timeout, not the bundle 5000', () => {
+    // The bundle deliberately carries 5000 to match its siblings; the
+    // llama-server-reranker recipe declares default_timeout_ms 30_000 for CPU
+    // cold start, and resolveSearchMode slots the recipe ABOVE the bundle.
+    // If that precedence ever changes, a local reranker silently fails open on
+    // first call and takes autocut down with it — so pin it here.
+    const r = resolveSearchMode({ mode: 'slm' });
+    expect(r.reranker_model.startsWith('llama-server-reranker:')).toBe(true);
+    expect(r.reranker_timeout_ms).toBe(30_000);
+  });
+
+  test('slm knobs hash differs from every other mode (no cache cross-serving)', () => {
+    // Adding a mode needed no KNOBS_HASH_VERSION bump because the hash folds
+    // `mode=` plus every knob value. Prove that rather than assume it: an slm
+    // result must never be served to a conservative/balanced/tokenmax read.
+    const hashes = SEARCH_MODES.map((m) => knobsHash(resolveSearchMode({ mode: m })));
+    expect(new Set(hashes).size).toBe(SEARCH_MODES.length);
+  });
+
   test('invalid mode string → balanced fallback (mode_valid=false)', () => {
     const r = resolveSearchMode({ mode: 'NUKE_MODE' });
     expect(r.resolved_mode).toBe('balanced');
