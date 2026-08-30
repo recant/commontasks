@@ -1,0 +1,359 @@
+version: 1
+
+skills:
+  recall:
+    description: "Retrieve the most recent relevant information about an entity."
+    trigger_examples:
+      - "What did Lakeview say last time?"
+      - "What did we discuss with Lakeview?"
+    required_inputs:
+      - "entity"
+    optional_inputs:
+      - "topic"
+      - "time_period"
+    sources:
+      - "meeting"
+      - "slack"
+      - "email"
+      - "crm_note"
+      - "ticket"
+    retrieval_function: "get_recall"
+    evidence:
+      minimum_sources: 1
+      directly_relevant: true
+    confidence:
+      high:
+        - "direct_recent_evidence"
+      medium:
+        - "indirect_or_old_evidence"
+      low:
+        - "weak_evidence"
+    abstain_when:
+      - "no_relevant_evidence"
+      - "entity_unresolved"
+    output: "concise_summary_with_citations"
+  timeline:
+    description: "Reconstruct the material history of an entity across time."
+    trigger_examples:
+      - "What happened with Lakeview over the last six months?"
+      - "Walk me through our history with Lakeview."
+    required_inputs:
+      - "entity"
+    optional_inputs:
+      - "time_period"
+      - "topic"
+    sources:
+      - "meeting"
+      - "slack"
+      - "email"
+      - "crm_note"
+      - "ticket"
+      - "postmortem"
+    retrieval_function: "get_timeline"
+    evidence:
+      minimum_events: 2
+      ordered_by_date: true
+    confidence:
+      high:
+        - "multiple_relevant_events"
+      medium:
+        - "limited_events"
+      low:
+        - "single_or_weak_event"
+    abstain_when:
+      - "no_relevant_events"
+      - "entity_unresolved"
+    output: "chronological_summary"
+  person:
+    description: "Retrieve claims, positions, or statements attributable to a specific person."
+    trigger_examples:
+      - "What has Priya said about modifier 59?"
+      - "What was Marcus's position on attachments?"
+    required_inputs:
+      - "person"
+    optional_inputs:
+      - "topic"
+      - "time_period"
+    sources:
+      - "meeting"
+      - "expert_call"
+      - "slack"
+      - "email"
+      - "ai_chat"
+    retrieval_function: "get_person_claims"
+    evidence:
+      minimum_claims: 1
+      speaker_attribution_required: true
+    confidence:
+      high:
+        - "direct_speaker_attribution"
+      medium:
+        - "indirect_context"
+      low:
+        - "uncertain_attribution"
+    abstain_when:
+      - "no_attributed_claims"
+      - "person_unresolved"
+    output: "claims_with_sources"
+  decision:
+    description: "Explain what decision was made and why."
+    trigger_examples:
+      - "Why did we choose BrightPath?"
+      - "What did we decide about the pilot?"
+    required_inputs:
+      - "decision_or_entity"
+    optional_inputs:
+      - "topic"
+      - "time_period"
+    sources:
+      - "meeting"
+      - "slack"
+      - "postmortem"
+      - "email"
+      - "crm_note"
+      - "sop"
+    retrieval_function: "get_decision_rationale"
+    evidence:
+      decision_required: true
+      rationale_preferred: true
+    confidence:
+      high:
+        - "decision_and_rationale_supported"
+      medium:
+        - "decision_found_but_rationale_limited"
+      low:
+        - "decision_itself_uncertain"
+    abstain_when:
+      - "no_decision_evidence"
+    output: "decision_plus_rationale"
+  follow_up:
+    description: "Identify commitments and action items associated with an entity or conversation."
+    trigger_examples:
+      - "What do we still owe Northside?"
+      - "What are the open actions from the last meeting?"
+    required_inputs:
+      - "entity_or_meeting"
+    optional_inputs:
+      - "owner"
+      - "status"
+      - "time_period"
+    sources:
+      - "meeting"
+      - "slack"
+      - "email"
+      - "crm_note"
+      - "ticket"
+    retrieval_function: "get_followups"
+    evidence:
+      action_item_required: true
+      status_preferred: true
+    confidence:
+      high:
+        - "action_and_status_directly_recorded"
+      medium:
+        - "action_recorded_but_status_missing"
+      low:
+        - "weak_or_inferred_commitment"
+    abstain_when:
+      - "no_action_items_found"
+    output: "action_item_table_or_bullets"
+  change:
+    description: "Compare earlier and later organizational positions or facts."
+    trigger_examples:
+      - "Did our position on UHC appeal windows change?"
+      - "What changed about the attachment process?"
+    required_inputs:
+      - "topic_or_entity"
+    optional_inputs:
+      - "time_period"
+    sources:
+      - "sop"
+      - "expert_call"
+      - "meeting"
+      - "slack"
+      - "email"
+      - "postmortem"
+      - "payer_config"
+    retrieval_function: "get_changes"
+    evidence:
+      earlier_position_required: true
+      later_position_required: true
+      explicit_supersession_preferred: true
+    confidence:
+      high:
+        - "dated_before_and_after_evidence"
+      medium:
+        - "before_after_without_explicit_supersession"
+      low:
+        - "only_one_position_found"
+    abstain_when:
+      - "no_change_evidence"
+    output: "before_after_comparison"
+  frequency:
+    description: "Measure how often a question or issue has been raised."
+    trigger_examples:
+      - "How often do people ask about modifier 59?"
+      - "Is this a recurring question?"
+    required_inputs:
+      - "question_or_topic"
+    optional_inputs:
+      - "time_period"
+      - "team"
+    sources:
+      - "ai_chat"
+      - "slack"
+      - "meeting"
+      - "ticket"
+    retrieval_function: "get_frequency"
+    evidence:
+      recorded_instances_required: true
+      distinct_askers_preferred: true
+    confidence:
+      high:
+        - "multiple_recorded_instances"
+      medium:
+        - "few_instances"
+      low:
+        - "single_mention"
+    abstain_when:
+      - "no_question_instances"
+    output: "count_and_pattern"
+  consensus:
+    description: "Determine whether independent sources or speakers agree on a proposition."
+    trigger_examples:
+      - "Do our experts agree that implementation is the biggest barrier?"
+      - "What do experts agree on?"
+    required_inputs:
+      - "topic_or_proposition"
+    optional_inputs:
+      - "source_type"
+      - "time_period"
+    sources:
+      - "expert_call"
+      - "meeting"
+      - "customer_call"
+      - "research_note"
+    retrieval_function: "get_consensus"
+    evidence:
+      minimum_independent_sources: 2
+      independent_speakers_preferred: true
+    confidence:
+      high:
+        - "two_or_more_independent_sources_same_stance"
+      medium:
+        - "limited_independent_evidence"
+      low:
+        - "single_source_or_mixed_evidence"
+    abstain_when:
+      - "fewer_than_two_independent_sources"
+      - "proposition_unclear"
+    output: "consensus_dissent_evidence"
+  contradiction:
+    description: "Identify materially conflicting current claims about the same proposition."
+    trigger_examples:
+      - "Who disagrees about MassHealth attachments?"
+      - "Are there conflicting views on this?"
+    required_inputs:
+      - "topic_or_proposition"
+    optional_inputs:
+      - "entity"
+      - "time_period"
+    sources:
+      - "meeting"
+      - "expert_call"
+      - "slack"
+      - "email"
+      - "sop"
+    retrieval_function: "get_contradictions"
+    evidence:
+      minimum_conflicting_claims: 2
+      current_claims_required: true
+    confidence:
+      high:
+        - "two_current_conflicting_claims"
+      medium:
+        - "conflict_exists_but_scope_unclear"
+      low:
+        - "weak_or_stale_conflict"
+    abstain_when:
+      - "no_substantiated_conflict"
+    output: "both_positions_and_resolution_status"
+  evidence:
+    description: "Trace a claim or answer back to its supporting organizational sources."
+    trigger_examples:
+      - "What is the evidence for this?"
+      - "Where did we get this conclusion?"
+    required_inputs:
+      - "claim_or_topic"
+    optional_inputs:
+      - "speaker"
+      - "time_period"
+    sources:
+      - "all_relevant_sources"
+    retrieval_function: "get_evidence"
+    evidence:
+      source_trace_required: true
+    confidence:
+      high:
+        - "direct_source_trace"
+      medium:
+        - "indirect_source_trace"
+      low:
+        - "unverifiable_claim"
+    abstain_when:
+      - "no_source_trace"
+    output: "evidence_list"
+  routing:
+    description: "Identify people with relevant organizational expertise."
+    trigger_examples:
+      - "Who knows the most about payer operations?"
+      - "Who should I talk to about Anthem eligibility?"
+    required_inputs:
+      - "topic"
+    optional_inputs:
+      - "entity"
+      - "team"
+    sources:
+      - "people"
+      - "expert_call"
+      - "meeting"
+      - "slack"
+      - "project"
+    retrieval_function: "get_expert"
+    evidence:
+      explicit_expertise_preferred: true
+    confidence:
+      high:
+        - "explicit_expert_in_relationship"
+      medium:
+        - "multiple_relevant_claims"
+      low:
+        - "weak_inference"
+    abstain_when:
+      - "no_relevant_expert_found"
+    output: "people_with_reason"
+  gap:
+    description: "Identify questions for which the organization lacks sufficient authoritative knowledge."
+    trigger_examples:
+      - "Do we actually know why customers are dropping off?"
+      - "What don't we know about this?"
+    required_inputs:
+      - "topic_or_question"
+    optional_inputs:
+      - "time_period"
+    sources:
+      - "all_relevant_sources"
+    retrieval_function: "get_knowledge_gaps"
+    evidence:
+      recurring_question_or_material_unknown_required: true
+      authoritative_answer_absence_required: true
+    confidence:
+      high:
+        - "repeated_question_and_no_authoritative_answer"
+      medium:
+        - "limited_evidence_of_gap"
+      low:
+        - "single_unanswered_question"
+    abstain_when:
+      - "sufficient_authoritative_answer_exists"
+    output: "gap_statement_with_evidence"

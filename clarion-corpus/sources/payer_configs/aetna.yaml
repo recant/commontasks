@@ -1,0 +1,23 @@
+# Raw config (un-indexed original; canonical page: aetna-config.md / src041)
+payer: aetna
+payer_id: "60054"
+connection:
+  clearinghouse_route: primary
+  submission_cycle: "18:00 America/New_York"
+eligibility:
+  realtime_270: true
+  endpoint: "https://elig.aetna.example/x12/270"
+  mtls:
+    ca_bundle: dual
+    ca_bundle_files: ["aetna-ca-2024.pem", "aetna-ca-2026.pem"]
+    chain_change_alert: true
+  retry:
+    policy: exponential_backoff
+    base_ms: 400
+    max_attempts: 4
+    jitter: true
+  fallback:
+    cached_271: true
+    ttl_hours: 24
+    label_stale: true
+    queue_batch_270: true

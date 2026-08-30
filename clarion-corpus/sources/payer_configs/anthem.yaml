@@ -1,0 +1,21 @@
+# Raw config (un-indexed original; canonical page: anthem-config.md / src031)
+payer: anthem
+payer_id: "660"
+connection:
+  clearinghouse_route: primary
+  submission_cycle: "18:00 America/New_York"
+edits:
+  anthem_line_split: true
+  max_units_per_line: 4
+  split_codes: ["97110", "97112", "97140", "97530"]
+modifier_rules:
+  prefer_x_subset: true
+  placement: column_2_line
+  require_doc_pointer: true
+  ptp_pairs:
+    - {column_1: "97140", column_2: "97110", swap_to: "XS"}
+    - {column_1: "97140", column_2: "97112", swap_to: "XS"}
+    - {column_1: "97530", column_2: "97110", swap_to: "XS"}
+reconsideration:
+  window_days: 120
+  channel: availity_portal

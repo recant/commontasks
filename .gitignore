@@ -3,3 +3,4 @@ commontasks.db-shm
 commontasks.db-wal
 __pycache__/
 *.pyc
+clarion-corpus/clarion.db

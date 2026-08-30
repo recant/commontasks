@@ -1,0 +1,40 @@
+# Schema pack: clarion-v1
+# Declares the document types used across the Clarion Health corpus (gbrain-compatible).
+# expert_routing powers "whoknows" (query type 11); extractable marks types that feed claim extraction.
+name: clarion-v1
+version: 1.0.0
+description: >
+  Document schema for the Clarion Health knowledge corpus. Every file is markdown +
+  frontmatter. Wikilinks ([[dir/slug]]) wire the graph on import; paths resolve by
+  suffix match (source files may omit the sources/ prefix, e.g.
+  [[expert_calls/2026-08-05-legal-call]]).
+
+types:
+  slack:        {extractable: true,  fields: [id, type, date, title, channel, participants]}
+  meeting:      {extractable: true,  fields: [id, type, date, title, participants]}
+  expert-call:  {extractable: true,  fields: [id, type, date, title, participants]}
+  ticket:       {extractable: true,  fields: [id, type, date, title, ticket, status, assignee, client, participants]}
+  sop:          {extractable: false, fields: [id, type, date, title, owner, status, superseded_by, superseded_scope]}
+  email:        {extractable: false, fields: [id, type, date, title, from, to, participants]}
+  crm-note:     {extractable: false, fields: [id, type, date, title, client, author]}
+  postmortem:   {extractable: true,  fields: [id, type, date, title, incident, participants]}
+  payer-config: {extractable: false, fields: [id, type, date, title, payer, maintainer]}
+  ai-chat:      {extractable: true,  fields: [id, type, date, title, participants, assistant]}
+  person:       {expert_routing: true, fields: [type, name, role, affiliation, internal]}
+  client:       {fields: [type, name, specialty, contact, contract_end, status]}
+  payer:        {fields: [type, name]}
+  topic:        {fields: [type, label]}
+  question:     {fields: [type, text, ask_count]}
+  decision:     {fields: [type, label, date, decided_by]}
+  skill:        {fields: [type, name, description, derived_from]}
+
+status_values: [current, superseded, stale, draft]
+
+conventions:
+  date_format: YYYY-MM-DD
+  today: 2026-08-30
+  activity_window: [2026-02-01, 2026-08-25]
+  stale_docs: >
+    A doc superseded in part carries superseded_by (wikilink to the superseding
+    source) and superseded_scope (what exactly is stale). The rest of the doc
+    remains current.

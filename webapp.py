@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
-"""Local browser UI for CommonTasks.
-
-Run:
-    python3 webapp.py
-Then open:
-    http://localhost:8000
-
-Everything stays local: browser -> Python server -> Ollama + SQLite.
-"""
+"""Browser UI for the CommonTasks procedural-memory demo."""
 
 from __future__ import annotations
 
@@ -17,7 +9,8 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from demo import MODEL, run_agent, seed_database
+from demo import list_tasks, seed_database
+from liquid_agent import MODEL, run_agent
 
 HOST = os.environ.get("COMMONTASKS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("COMMONTASKS_PORT", "8000"))
@@ -26,23 +19,24 @@ WEB_ROOT = ROOT / "web"
 
 
 def build_prompt(message: str, history: list[dict[str, Any]]) -> str:
-    """Turn the recent browser conversation into a compact prompt for the agent."""
-    recent = history[-8:]
-    lines = []
+    """Include recent employee context while leaving task knowledge in the corpus."""
+    recent = history[-12:]
+    lines: list[str] = []
     for item in recent:
         role = str(item.get("role", "user")).strip().lower()
         content = str(item.get("content", "")).strip()
         if content:
             lines.append(f"{role.upper()}: {content}")
 
-    if lines:
-        return (
-            "Continue this employee-support conversation. Use the local company database and tools "
-            "when useful.\n\nRecent conversation:\n"
-            + "\n".join(lines)
-            + f"\nUSER: {message}"
-        )
-    return message
+    if not lines:
+        return message
+    return (
+        "Continue this employee conversation. Case-specific facts must come from this conversation. "
+        "Retrieve the relevant procedure, reference, and examples from the corpus before doing the task.\n\n"
+        "Recent conversation:\n"
+        + "\n".join(lines)
+        + f"\nUSER: {message}"
+    )
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -60,7 +54,12 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/api/health":
-            self._json(200, {"ok": True, "model": MODEL})
+            self._json(200, {
+                "ok": True,
+                "model": MODEL,
+                "inference": "OpenRouter",
+                "tasks": len(list_tasks()["tasks"]),
+            })
             return
         if self.path == "/":
             self.path = "/index.html"
@@ -83,8 +82,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not isinstance(history, list):
                 raise ValueError("history must be a list")
 
-            prompt = build_prompt(message, history)
-            answer = run_agent(prompt, verbose=False)
+            answer = run_agent(build_prompt(message, history), verbose=False)
             self._json(200, {"answer": answer, "model": MODEL})
         except Exception as exc:
             self._json(500, {"error": str(exc)})
@@ -95,8 +93,11 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main() -> None:
     info = seed_database(50_000)
-    print(f"Ready: {info['knowledge_rows']:,} local knowledge records in {info['database']}")
-    print(f"Model: {MODEL}")
+    print(
+        f"Ready: {info['corpus_rows']:,} procedural-memory records across "
+        f"{info['tasks']} tasks in {info['database']}"
+    )
+    print(f"Hosted model: {MODEL} via OpenRouter")
     print(f"Open http://localhost:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
 
