@@ -7,7 +7,10 @@ The demo runs **Qwen3.5-4B** locally through [Ollama](https://ollama.com/library
 ## What it demonstrates
 
 ```text
-employee request
+browser / employee request
+      |
+      v
+local Python server
       |
       v
 local Qwen3.5-4B
@@ -29,19 +32,34 @@ For this demo the important capability is **reliable tool/function calling**, no
 
 The model is configurable with `COMMONTASKS_MODEL`, so swapping in another local model takes one environment variable.
 
-## Run it
+## Browser chatbot
 
-1. Install [Ollama](https://ollama.com/).
-2. Pull the model:
+After installing Ollama and pulling the model:
 
 ```bash
 ollama pull qwen3.5:4b
+python3 webapp.py
 ```
 
-3. Run the demo:
+Then open:
+
+```text
+http://localhost:8000
+```
+
+The website is entirely local:
+
+```text
+browser -> localhost:8000 -> Python -> Ollama -> Qwen3.5-4B
+                                      -> SQLite knowledge + tickets
+```
+
+No Flask, Node, or frontend build step is required.
+
+## Command-line demo
 
 ```bash
-python demo.py
+python3 demo.py
 ```
 
 The default request is:
@@ -53,7 +71,7 @@ Handle ticket 1001 using the company knowledge base.
 Or ask your own:
 
 ```bash
-python demo.py "Handle ticket 1002 and tell me what you changed"
+python3 demo.py "Handle ticket 1002 and tell me what you changed"
 ```
 
 On first run, the script creates `commontasks.db` with **50,000 synthetic knowledge records** plus three fake employee-support tickets.
@@ -61,7 +79,7 @@ On first run, the script creates `commontasks.db` with **50,000 synthetic knowle
 ### Test the large-database retrieval without Ollama
 
 ```bash
-python demo.py --db-only
+python3 demo.py --db-only
 ```
 
 That seeds the database and runs the retrieval path without invoking a model.
