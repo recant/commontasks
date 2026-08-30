@@ -2,9 +2,9 @@
 
 CommonTasks is a proof-of-concept for a **small language model that becomes much more useful by reading an organization's procedural memory at inference time**.
 
-The model is **not trained or fine-tuned on the organization**. Instead, when an employee asks it to do something, it retrieves the relevant internal procedure, reference rules, worked examples, and similar prior-agent cases from a local corpus and applies that material to the employee's new details.
+The model is **not trained or fine-tuned on the organization**. When an employee asks it to do something, CommonTasks retrieves the relevant internal procedure, reference rules, worked examples, and similar prior-agent cases from a local corpus. It then gives only that compact context plus the employee's new case details to a small model, which applies the retrieved procedure.
 
-The intended deployment is **offline / intranet-only**. There is no OpenRouter, Claude, GPT, Groq, or public-internet fallback in the app. The default configuration expects an OpenAI-compatible model server reachable on the local machine or private network.
+For this demo, inference uses **Liquid AI LFM2.5-2.6B through OpenRouter**. The 50,000-row synthetic company corpus stays in local SQLite; the whole database is never sent to OpenRouter.
 
 ## Core idea
 
@@ -12,7 +12,7 @@ The intended deployment is **offline / intranet-only**. There is no OpenRouter, 
 employee gives a new case
         |
         v
-small intranet SLM
+CommonTasks retrieval layer
         |
         +--> search_corpus("what task is this?")
         |
@@ -24,7 +24,10 @@ small intranet SLM
                   +-- similar prior cases
         |
         v
-SLM applies that procedure to the NEW details
+small Liquid model via OpenRouter
+        |
+        v
+apply procedure to the NEW details
         |
         v
 structured answer / analysis / draft
@@ -32,14 +35,14 @@ structured answer / analysis / draft
 
 The SLM does not have to memorize every company process in its weights. The corpus supplies the organization-specific knowledge at inference time.
 
-For example, the employee can say:
+For example:
 
 ```text
 Analyze this incident: checkout is failing on about 35% of requests,
 it started 12 minutes ago, and we have no evidence of data loss.
 ```
 
-CommonTasks retrieves the internal incident-severity procedure and rubric, sees a worked example, and then applies that rubric to the new incident.
+CommonTasks retrieves the internal incident-severity procedure, rubric, worked example, and similar historical cases. Liquid then applies that material to the new incident.
 
 Or:
 
@@ -49,21 +52,19 @@ Source A says the facility reopened Monday. Satellite reporting shows
 vehicle activity Tuesday. Source B says it remains closed but gives no date.
 ```
 
-The SLM retrieves the internal analysis procedure telling it how to separate claims, evidence, contradictions, source statements, inference, and information gaps. It then applies that procedure to the supplied report.
+The model retrieves the internal procedure for separating claims, evidence, contradictions, inference, and information gaps, then uses that procedure on the supplied notes.
 
 ## The corpus
 
 On first run, `commontasks.db` is seeded with **50,000 synthetic procedural-memory records** across **27 task families**.
 
-Each task has three high-signal records:
+Each task has three authoritative/high-signal records:
 
 1. **Procedure** — how the organization performs the task and what inputs are required.
 2. **Reference** — organization-specific rules, thresholds, rubrics, or constraints.
 3. **Worked example** — a representative employee input and a good prior-agent output.
 
-That produces 81 authoritative/high-signal records. The rest of the 50,000-row corpus consists of synthetic prior cases derived from things such as past assistant conversations, internal wikis, runbooks, resolved support threads, operations notes, and training examples.
-
-Those prior cases are not treated as authoritative facts. They are patterns the SLM can use after it retrieves the governing procedure/reference.
+That produces 81 authoritative records. The remaining rows simulate prior cases derived from past assistant conversations, wikis, runbooks, resolved support threads, operations notes, and training examples. Prior cases are examples, not authoritative policy.
 
 ## Tasks currently represented
 
@@ -97,13 +98,11 @@ The demo corpus contains these 27 task families:
 - `regulatory_submission_check` — compare a filing package to the internal completeness checklist
 - `policy_question_answering` — answer ordinary employee policy questions from authoritative internal records
 
-The clinical task is deliberately limited to **chart abstraction and protocol lookup**. It does not diagnose, prescribe, or make final clinical decisions.
+The clinical demo is limited to **case abstraction and protocol/checklist lookup for clinician review**; it is not a diagnosis/prescribing system.
 
 ## Why this is different from training
 
-No gradient updates happen. There is no per-employee fine-tune and no LoRA.
-
-Conceptually:
+No gradient updates happen. There is no employee fine-tune and no LoRA.
 
 ```text
 base SLM
@@ -119,67 +118,70 @@ new employee-provided case details
 answer
 ```
 
-This means an organization can change a procedure by changing the corpus rather than retraining the model.
+If the organization changes a process, it changes the corpus rather than retraining the model.
 
 ## Retrieval tools
 
 The SLM gets four narrow tools:
 
-- `search_corpus(query)` — search the entire 50,000-record corpus
+- `search_corpus(query)` — search the 50,000-record corpus
 - `get_corpus_record(record_id)` — read one complete result
-- `get_task_context(task_name)` — load the procedure, reference, worked example, and a few prior cases for a task
+- `get_task_context(task_name)` — load the procedure, reference, worked example, and a few prior cases
 - `list_tasks()` — inspect the task catalog
 
-The system prompt tells the SLM to search before doing substantive work and to request missing case-specific inputs rather than copying facts from an old example.
+The employee supplies the **current case facts**. Old examples may teach format/procedure, but their case-specific details must not be copied into the new case.
 
-## Offline / intranet inference
+## Run the demo with Liquid + OpenRouter
 
-By default CommonTasks expects an OpenAI-compatible inference server at:
-
-```text
-http://127.0.0.1:1234/v1/chat/completions
-```
-
-The default model identifier is:
-
-```text
-LiquidAI/LFM2-2.6B
-```
-
-Both values are configurable. Your local model server may expose the model under a different identifier.
+Create an OpenRouter API key, then:
 
 ```bash
-export COMMONTASKS_API_URL="http://127.0.0.1:1234/v1/chat/completions"
-export COMMONTASKS_MODEL="LiquidAI/LFM2-2.6B"
-export COMMONTASKS_API_KEY="local"
+export OPENROUTER_API_KEY="your_key_here"
 python3 webapp.py
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8000
 ```
 
-For an enterprise/air-gapped deployment, `COMMONTASKS_API_URL` can point to an inference server elsewhere on the private network instead of localhost.
+The browser path is:
 
-There is intentionally **no external-provider fallback**. If the intranet model server cannot be reached, CommonTasks errors rather than sending the request somewhere else.
-
-## Test the corpus without any model
-
-You can verify database construction and retrieval without starting an SLM:
-
-```bash
-python3 demo.py --db-only
+```text
+browser
+  -> local Python server
+  -> local SQLite procedural-memory retrieval
+  -> selected procedure/reference/examples
+  -> OpenRouter
+  -> liquid/lfm-2.5-2.6b:free
+  -> answer
 ```
 
-List the 27 tasks:
+The default model and endpoint are:
 
-```bash
-python3 demo.py --list-tasks
+```text
+COMMONTASKS_MODEL=liquid/lfm-2.5-2.6b:free
+COMMONTASKS_API_URL=https://openrouter.ai/api/v1/chat/completions
 ```
 
-Or inspect retrieval from Python/CLI while developing.
+You can also use the command-line Liquid agent:
+
+```bash
+python3 liquid_agent.py "Triage this bug: the dashboard goes blank after switching workspaces in Chrome"
+```
+
+List the supported task families:
+
+```bash
+python3 liquid_agent.py --list-tasks
+```
+
+Test only the corpus/retrieval layer without making a model request:
+
+```bash
+python3 liquid_agent.py --db-only
+```
 
 ## Example prompts
 
@@ -207,19 +209,17 @@ Triage this paper for our question of whether intervention X changes biomarker Y
 Structure this patient case for clinician review: age 67, fatigue, creatinine 1.1 to 1.9...
 ```
 
-The important behavior is that the employee supplies **the current case facts**. The corpus supplies **how this organization handles that kind of case**.
+## Privacy note
 
-## Design principle
+This repository contains synthetic demo data. The OpenRouter demo is not the architecture you would use for a genuinely air-gapped organization. The point of this version is to cheaply demonstrate that a small model can gain substantial task capability from retrieved procedural memory without any training.
 
-The goal is not to prove that a 2.6B model has the same general intelligence as a frontier model.
-
-The goal is to test whether, inside a fixed organization, a smaller model can perform a much larger share of useful work when the difficult organization-specific knowledge has already been externalized as searchable procedural memory:
+## CommonTasks thesis
 
 ```text
-general language/reasoning ability      -> SLM
+general language/reasoning ability      -> small Liquid model
 how our organization does this task     -> corpus
 similar good past behavior              -> worked examples / prior cases
 facts about this specific situation     -> employee input
 ```
 
-That is the CommonTasks thesis.
+The experiment is whether a small model can perform a much larger share of useful organizational work when the difficult organization-specific knowledge has already been externalized as searchable procedural memory.
