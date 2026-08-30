@@ -1,0 +1,5 @@
+commontasks.db
+commontasks.db-shm
+commontasks.db-wal
+__pycache__/
+*.pyc
