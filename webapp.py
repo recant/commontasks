@@ -12,8 +12,10 @@ from typing import Any
 from demo import list_tasks, seed_database
 from liquid_agent import MODEL, run_agent
 
-HOST = os.environ.get("COMMONTASKS_HOST", "127.0.0.1")
-PORT = int(os.environ.get("COMMONTASKS_PORT", "8000"))
+# Bind on all interfaces so the same entrypoint works locally and on hosted
+# platforms such as Render/Railway. Those platforms conventionally inject PORT.
+HOST = os.environ.get("COMMONTASKS_HOST") or os.environ.get("HOST") or "0.0.0.0"
+PORT = int(os.environ.get("PORT") or os.environ.get("COMMONTASKS_PORT", "8000"))
 ROOT = Path(__file__).resolve().parent
 WEB_ROOT = ROOT / "web"
 
@@ -98,7 +100,10 @@ def main() -> None:
         f"{info['tasks']} tasks in {info['database']}"
     )
     print(f"Hosted model: {MODEL} via OpenRouter")
-    print(f"Open http://localhost:{PORT}")
+    if HOST in {"0.0.0.0", "::"}:
+        print(f"Open http://localhost:{PORT} locally; hosted platforms will expose their public URL.")
+    else:
+        print(f"Open http://{HOST}:{PORT}")
     ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
 
 
