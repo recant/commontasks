@@ -1,0 +1,228 @@
+[
+  {
+    "question": "What did Lakeview say last time?",
+    "skill": "recall",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What did we discuss with Lakeview?",
+    "skill": "recall",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What happened with Lakeview over the last six months?",
+    "skill": "timeline",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Walk me through our history with Lakeview.",
+    "skill": "timeline",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What has Priya said about modifier 59?",
+    "skill": "person",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What was Marcus's position on attachments?",
+    "skill": "person",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Why did we choose BrightPath?",
+    "skill": "decision",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What did we decide about the pilot?",
+    "skill": "decision",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What do we still owe Northside?",
+    "skill": "follow_up",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What are the open actions from the last meeting?",
+    "skill": "follow_up",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Did our position on UHC appeal windows change?",
+    "skill": "change",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What changed about the attachment process?",
+    "skill": "change",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "How often do people ask about modifier 59?",
+    "skill": "frequency",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Is this a recurring question?",
+    "skill": "frequency",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Do our experts agree that implementation is the biggest barrier?",
+    "skill": "consensus",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What do experts agree on?",
+    "skill": "consensus",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Who disagrees about MassHealth attachments?",
+    "skill": "contradiction",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Are there conflicting views on this?",
+    "skill": "contradiction",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What is the evidence for this?",
+    "skill": "evidence",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Where did we get this conclusion?",
+    "skill": "evidence",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Who knows the most about payer operations?",
+    "skill": "routing",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Who should I talk to about Anthem eligibility?",
+    "skill": "routing",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Do we actually know why customers are dropping off?",
+    "skill": "gap",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What don't we know about this?",
+    "skill": "gap",
+    "entities": [],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Before my Lakeview meeting, remind me what happened, what we promised them, and what is still unresolved.",
+    "skills": [
+      "timeline",
+      "follow_up",
+      "gap"
+    ],
+    "entities": [
+      "Lakeview Orthopedics"
+    ],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "What did we learn from experts about hospital AI adoption, and do they agree?",
+    "skills": [
+      "recall",
+      "consensus"
+    ],
+    "entities": [],
+    "topic": "hospital AI adoption",
+    "time_period": null
+  },
+  {
+    "question": "What do we know about Lakeview?",
+    "skills": [
+      "recall"
+    ],
+    "entities": [
+      "Lakeview Orthopedics"
+    ],
+    "topic": null,
+    "time_period": null
+  },
+  {
+    "question": "Has our understanding of UHC's appeal window changed, and why?",
+    "skills": [
+      "change",
+      "decision"
+    ],
+    "entities": [
+      "UnitedHealth"
+    ],
+    "topic": "appeal window",
+    "time_period": null
+  },
+  {
+    "question": "Who disagrees about MassHealth attachments and what evidence supports each side?",
+    "skills": [
+      "contradiction",
+      "evidence"
+    ],
+    "entities": [
+      "MassHealth"
+    ],
+    "topic": "attachments",
+    "time_period": null
+  }
+]
