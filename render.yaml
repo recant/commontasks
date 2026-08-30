@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: commontasks-demo
+    runtime: python
+    plan: free
+    startCommand: python3 webapp.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: COMMONTASKS_MODEL
+        value: liquid/lfm-2.5-2.6b:free
