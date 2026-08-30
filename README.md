@@ -2,11 +2,13 @@
 
 A proof-of-concept for a **hosted small language model that answers recurring employee questions and performs common company workflows using a large private knowledge store**.
 
-The model does not run on the employee laptop. By default the demo calls Groq's hosted `llama-3.1-8b-instant`. The synthetic company knowledge remains in local SQLite, and the model only receives the small records returned by explicit retrieval tools.
+The model does not run on the employee laptop. By default the demo uses **Liquid AI's `LFM2.5-2.6B` through OpenRouter's free hosted endpoint** (`liquid/lfm-2.5-2.6b:free`). The synthetic company knowledge remains in local SQLite, and the model only receives the small records returned by explicit retrieval tools.
+
+Liquid does not currently offer its own general hosted API, so OpenRouter is used as the hosted inference layer. The free endpoint costs $0 per prompt/completion token but is rate-limited and intended for prototypes/low-volume use.
 
 The knowledge store is meant to stand in for information derived from a **GBrain-like company brain**: repeated Slack answers, handbooks, wikis, FAQs, policies, procedures, and past internal discussions.
 
-## What the demo is now about
+## What the demo is about
 
 Employees should be able to ask normal questions such as:
 
@@ -36,7 +38,10 @@ local Python web server
         |             +-- FAQ / policy / workflow retrieval
         |
         v
-hosted small model (Groq by default)
+OpenRouter hosted inference
+        |
+        v
+Liquid AI LFM2.5-2.6B (free)
         |
         +-- search_knowledge()
         +-- get_knowledge_record()
@@ -81,12 +86,12 @@ Each workflow has required fields enforced in Python, outside the model. `submit
 
 Workflow submissions only write to the local synthetic `workflow_runs` table. They do not touch real company systems.
 
-## Run it
+## Run it for free
 
-You only need Python 3 and a Groq API key; Ollama is no longer used.
+Create a free OpenRouter API key, then:
 
 ```bash
-export GROQ_API_KEY="your_key_here"
+export OPENROUTER_API_KEY="your_key_here"
 python3 webapp.py
 ```
 
@@ -99,23 +104,25 @@ http://localhost:8000
 The request path is:
 
 ```text
-browser -> local Python server -> hosted small model
+browser -> local Python server -> OpenRouter -> Liquid LFM2.5-2.6B
                               -> local SQLite company brain
                               -> local synthetic workflow runs
 ```
 
+OpenRouter's free-model limits are lower than paid inference, so this is appropriate for a demo rather than a high-volume production deployment.
+
 ## Command-line use
 
-Ask a normal company question:
+Ask a normal company question with the same free Liquid model:
 
 ```bash
-python3 demo.py "How many PTO days do I get?"
+python3 liquid_agent.py "How many PTO days do I get?"
 ```
 
 Start a workflow conversationally:
 
 ```bash
-python3 demo.py "I need Figma access to edit launch mockups"
+python3 liquid_agent.py "I need Figma access to edit launch mockups"
 ```
 
 CommonTasks should retrieve the software-access procedure and ask for any required detail you did not provide rather than inventing it.
@@ -123,7 +130,7 @@ CommonTasks should retrieve the software-access procedure and ask for any requir
 ### Test the database without any model API
 
 ```bash
-python3 demo.py --db-only
+python3 liquid_agent.py --db-only
 ```
 
 This seeds the company brain, runs example searches, and deliberately attempts an incomplete software-access workflow so you can see the missing-field validation.
@@ -133,12 +140,18 @@ This seeds the company brain, runs example searches, and deliberately attempts a
 Defaults:
 
 ```text
-COMMONTASKS_MODEL=llama-3.1-8b-instant
-COMMONTASKS_API_URL=https://api.groq.com/openai/v1/chat/completions
+COMMONTASKS_MODEL=liquid/lfm-2.5-2.6b:free
+COMMONTASKS_API_URL=https://openrouter.ai/api/v1/chat/completions
 COMMONTASKS_DB=commontasks.db
 ```
 
-`GROQ_API_KEY` is used by default. You can instead set `COMMONTASKS_API_KEY` and point `COMMONTASKS_API_URL` at another OpenAI-compatible hosted chat-completions endpoint.
+`OPENROUTER_API_KEY` is used by default. `COMMONTASKS_API_KEY`, `COMMONTASKS_MODEL`, and `COMMONTASKS_API_URL` can override the hosted provider/model without changing the app.
+
+## Privacy note
+
+This repository uses **synthetic** company data. OpenRouter's free Liquid model listing states that prompts and outputs may be retained and used to train Liquid models. Do not use the free endpoint with confidential company Slack messages, documents, credentials, personal data, or other sensitive internal information.
+
+For a real CommonTasks deployment, use an inference provider with appropriate enterprise data-retention/privacy terms, or host the model in controlled cloud infrastructure. The architecture can stay the same: the private corpus remains external and only the minimum retrieved context is sent to the model.
 
 ## Core design principle
 
